@@ -27,7 +27,7 @@ jobs:
       - run: curl -fsSL https://go.speakeasy.com/cli-install.sh | sh
       - uses: docker/build-push-action@v6
         with:
-          context: src/__tests__/mockserver
+          context: tests/mockserver
           push: false
           tags: mockserver-typescript:latest
       - run: docker run -d -p 18080:18080 mockserver-typescript:latest
