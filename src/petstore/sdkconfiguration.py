@@ -12,6 +12,8 @@ from typing import Callable, Dict, List, Optional, Tuple, Union
 
 
 SERVERS = [
+    "http://localhost:18080",
+    # Mock API server.
     "https://{environment}.petstore.io",
     # A per-environment API.
 ]
@@ -37,9 +39,9 @@ class SDKConfiguration:
     server_defaults: List[Dict[str, str]] = field(default_factory=List)
     language: str = "python"
     openapi_doc_version: str = "1.0.0"
-    sdk_version: str = "0.2.0"
+    sdk_version: str = "0.3.0"
     gen_version: str = "2.461.4"
-    user_agent: str = "speakeasy-sdk/python 0.2.0 2.461.4 1.0.0 petstore"
+    user_agent: str = "speakeasy-sdk/python 0.3.0 2.461.4 1.0.0 petstore"
     retry_config: OptionalNullable[RetryConfig] = Field(default_factory=lambda: UNSET)
     timeout_ms: Optional[int] = None
 

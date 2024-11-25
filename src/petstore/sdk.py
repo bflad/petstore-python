@@ -88,6 +88,7 @@ class Petstore(BaseSDK):
             if url_params is not None:
                 server_url = utils.template_url(server_url, url_params)
         server_defaults: List[Dict[str, str]] = [
+            {},
             {
                 "environment": environment or "prod",
             },

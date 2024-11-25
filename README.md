@@ -246,10 +246,45 @@ except models.SDKError as e:
 <!-- Start Server Selection [server] -->
 ## Server Selection
 
-### Server Variables
+### Select Server by Index
 
-The default server `https://{environment}.petstore.io` contains variables and is set to `https://prod.petstore.io` by default. To override default values, the following parameters are available when initializing the SDK client instance:
- * `environment: models.ServerEnvironment`
+You can override the default server globally by passing a server index to the `server_idx: int` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
+
+| #   | Server                              | Variables                               | Default values |
+| --- | ----------------------------------- | --------------------------------------- | -------------- |
+| 0   | `http://localhost:18080`            |                                         |                |
+| 1   | `https://{environment}.petstore.io` | `environment: models.ServerEnvironment` | `"prod"`       |
+
+If the selected server has variables, you may override their default values through the additional parameters made available in the SDK constructor.
+
+#### Example
+
+```python
+from petstore import Petstore
+
+s = Petstore(
+    server_idx=1,
+    api_key="<YOUR_API_KEY_HERE>",
+)
+
+res = s.pet.update_pet(request={
+    "name": "doggie",
+    "photo_urls": [
+        "<value>",
+        "<value>",
+    ],
+    "id": 10,
+    "category": {
+        "id": 1,
+        "name": "Dogs",
+    },
+})
+
+if res is not None:
+    # handle response
+    pass
+
+```
 
 ### Override Server URL Per-Client
 
@@ -258,7 +293,7 @@ The default server can also be overridden globally by passing a URL to the `serv
 from petstore import Petstore
 
 s = Petstore(
-    server_url="https://prod.petstore.io",
+    server_url="http://localhost:18080",
     api_key="<YOUR_API_KEY_HERE>",
 )
 
