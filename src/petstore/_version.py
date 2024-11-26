@@ -3,7 +3,7 @@
 import importlib.metadata
 
 __title__: str = "petstore"
-__version__: str = "0.3.1"
+__version__: str = "0.4.0"
 
 try:
     if __package__ is not None:

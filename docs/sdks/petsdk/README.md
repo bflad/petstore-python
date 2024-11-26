@@ -27,26 +27,25 @@ Update an existing pet by Id
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.pet.update_pet(request={
+        "name": "doggie",
+        "photo_urls": [
+            "<value>",
+            "<value>",
+        ],
+        "id": 10,
+        "category": {
+            "id": 1,
+            "name": "Dogs",
+        },
+    })
 
-res = s.pet.update_pet(request={
-    "name": "doggie",
-    "photo_urls": [
-        "<value>",
-        "<value>",
-    ],
-    "id": 10,
-    "category": {
-        "id": 1,
-        "name": "Dogs",
-    },
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -79,25 +78,24 @@ Add a new pet to the store
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.pet.add_pet(request={
+        "name": "doggie",
+        "photo_urls": [
+            "<value>",
+        ],
+        "id": 10,
+        "category": {
+            "id": 1,
+            "name": "Dogs",
+        },
+    })
 
-res = s.pet.add_pet(request={
-    "name": "doggie",
-    "photo_urls": [
-        "<value>",
-    ],
-    "id": 10,
-    "category": {
-        "id": 1,
-        "name": "Dogs",
-    },
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -127,15 +125,14 @@ Multiple status values can be provided with comma separated strings
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.pet.find_pets_by_status()
 
-res = s.pet.find_pets_by_status()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -168,15 +165,14 @@ Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.pet.find_pets_by_tags()
 
-res = s.pet.find_pets_by_tags()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -209,15 +205,14 @@ Returns a single pet
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.pet.get_pet_by_id(pet_id=504151)
 
-res = s.pet.get_pet_by_id(pet_id=504151)
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -250,15 +245,14 @@ Deletes a pet
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.pet.delete_pet(pet_id=441876)
 
-res = s.pet.delete_pet(pet_id=441876)
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -292,15 +286,14 @@ uploads an image
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.pet.upload_file(pet_id=565380)
 
-res = s.pet.upload_file(pet_id=565380)
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

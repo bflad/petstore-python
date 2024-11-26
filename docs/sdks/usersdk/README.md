@@ -24,24 +24,23 @@ This can only be done by the logged in user.
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.user.create_user(request={
+        "id": 10,
+        "username": "theUser",
+        "first_name": "John",
+        "last_name": "James",
+        "email": "john@email.com",
+        "password": "12345",
+        "phone": "12345",
+        "user_status": 1,
+    })
 
-res = s.user.create_user(request={
-    "id": 10,
-    "username": "theUser",
-    "first_name": "John",
-    "last_name": "James",
-    "email": "john@email.com",
-    "password": "12345",
-    "phone": "12345",
-    "user_status": 1,
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -71,26 +70,25 @@ Creates list of users with given input array
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.user.create_users_with_list_input(request=[
+        {
+            "id": 10,
+            "username": "theUser",
+            "first_name": "John",
+            "last_name": "James",
+            "email": "john@email.com",
+            "password": "12345",
+            "phone": "12345",
+            "user_status": 1,
+        },
+    ])
 
-res = s.user.create_users_with_list_input(request=[
-    {
-        "id": 10,
-        "username": "theUser",
-        "first_name": "John",
-        "last_name": "James",
-        "email": "john@email.com",
-        "password": "12345",
-        "phone": "12345",
-        "user_status": 1,
-    },
-])
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -120,15 +118,14 @@ Logs user into the system
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.user.login_user()
 
-res = s.user.login_user()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -162,13 +159,12 @@ Logs out current logged in user session
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    s.user.logout_user()
 
-s.user.logout_user()
-
-# Use the SDK ...
+    # Use the SDK ...
 
 ```
 
@@ -193,15 +189,14 @@ Get user by user name
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.user.get_user_by_name(username="Zachery_Lubowitz15")
 
-res = s.user.get_user_by_name(username="Zachery_Lubowitz15")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -234,22 +229,21 @@ This can only be done by the logged in user.
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    s.user.update_user(username="Dandre_Hand41", user={
+        "id": 10,
+        "username": "theUser",
+        "first_name": "John",
+        "last_name": "James",
+        "email": "john@email.com",
+        "password": "12345",
+        "phone": "12345",
+        "user_status": 1,
+    })
 
-s.user.update_user(username="Dandre_Hand41", user={
-    "id": 10,
-    "username": "theUser",
-    "first_name": "John",
-    "last_name": "James",
-    "email": "john@email.com",
-    "password": "12345",
-    "phone": "12345",
-    "user_status": 1,
-})
-
-# Use the SDK ...
+    # Use the SDK ...
 
 ```
 
@@ -276,15 +270,14 @@ This can only be done by the logged in user.
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.user.delete_user(username="Demetris_Schmitt")
 
-res = s.user.delete_user(username="Demetris_Schmitt")
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 

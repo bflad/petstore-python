@@ -86,41 +86,10 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 # Synchronous Example
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
-
-res = s.pet.update_pet(request={
-    "name": "doggie",
-    "photo_urls": [
-        "<value>",
-        "<value>",
-    ],
-    "id": 10,
-    "category": {
-        "id": 1,
-        "name": "Dogs",
-    },
-})
-
-if res is not None:
-    # handle response
-    pass
-```
-
-</br>
-
-The same SDK client can also be used to make asychronous requests by importing asyncio.
-```python
-# Asynchronous Example
-import asyncio
-from petstore import Petstore
-
-async def main():
-    s = Petstore(
-        api_key="<YOUR_API_KEY_HERE>",
-    )
-    res = await s.pet.update_pet_async(request={
+) as s:
+    res = s.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -132,9 +101,40 @@ async def main():
             "name": "Dogs",
         },
     })
+
     if res is not None:
         # handle response
         pass
+```
+
+</br>
+
+The same SDK client can also be used to make asychronous requests by importing asyncio.
+```python
+# Asynchronous Example
+import asyncio
+from petstore import Petstore
+
+async def main():
+    async with Petstore(
+        api_key="<YOUR_API_KEY_HERE>",
+    ) as s:
+        res = await s.pet.update_pet_async(request={
+            "name": "doggie",
+            "photo_urls": [
+                "<value>",
+                "<value>",
+            ],
+            "id": 10,
+            "category": {
+                "id": 1,
+                "name": "Dogs",
+            },
+        })
+
+        if res is not None:
+            # handle response
+            pass
 
 asyncio.run(main())
 ```
@@ -205,41 +205,40 @@ When custom error responses are specified for an operation, the SDK may also rai
 ```python
 from petstore import Petstore, models
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = None
+    try:
+        res = s.pet.update_pet(request={
+            "name": "doggie",
+            "photo_urls": [
+                "<value>",
+                "<value>",
+            ],
+            "id": 10,
+            "category": {
+                "id": 1,
+                "name": "Dogs",
+            },
+        })
 
-res = None
-try:
-    res = s.pet.update_pet(request={
-        "name": "doggie",
-        "photo_urls": [
-            "<value>",
-            "<value>",
-        ],
-        "id": 10,
-        "category": {
-            "id": 1,
-            "name": "Dogs",
-        },
-    })
+        if res is not None:
+            # handle response
+            pass
 
-    if res is not None:
-        # handle response
-        pass
-
-except models.APIErrorInvalidInput as e:
-    # handle e.data: models.APIErrorInvalidInputData
-    raise(e)
-except models.APIErrorUnauthorized as e:
-    # handle e.data: models.APIErrorUnauthorizedData
-    raise(e)
-except models.APIErrorNotFound as e:
-    # handle e.data: models.APIErrorNotFoundData
-    raise(e)
-except models.SDKError as e:
-    # handle exception
-    raise(e)
+    except models.APIErrorInvalidInput as e:
+        # handle e.data: models.APIErrorInvalidInputData
+        raise(e)
+    except models.APIErrorUnauthorized as e:
+        # handle e.data: models.APIErrorUnauthorizedData
+        raise(e)
+    except models.APIErrorNotFound as e:
+        # handle e.data: models.APIErrorNotFoundData
+        raise(e)
+    except models.SDKError as e:
+        # handle exception
+        raise(e)
 ```
 <!-- End Error Handling [errors] -->
 
@@ -262,27 +261,26 @@ If the selected server has variables, you may override their default values thro
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     server_idx=1,
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.pet.update_pet(request={
+        "name": "doggie",
+        "photo_urls": [
+            "<value>",
+            "<value>",
+        ],
+        "id": 10,
+        "category": {
+            "id": 1,
+            "name": "Dogs",
+        },
+    })
 
-res = s.pet.update_pet(request={
-    "name": "doggie",
-    "photo_urls": [
-        "<value>",
-        "<value>",
-    ],
-    "id": 10,
-    "category": {
-        "id": 1,
-        "name": "Dogs",
-    },
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -292,27 +290,26 @@ The default server can also be overridden globally by passing a URL to the `serv
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     server_url="http://localhost:18080",
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.pet.update_pet(request={
+        "name": "doggie",
+        "photo_urls": [
+            "<value>",
+            "<value>",
+        ],
+        "id": 10,
+        "category": {
+            "id": 1,
+            "name": "Dogs",
+        },
+    })
 
-res = s.pet.update_pet(request={
-    "name": "doggie",
-    "photo_urls": [
-        "<value>",
-        "<value>",
-    ],
-    "id": 10,
-    "category": {
-        "id": 1,
-        "name": "Dogs",
-    },
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 <!-- End Server Selection [server] -->
@@ -413,26 +410,25 @@ To authenticate with the API the `api_key` parameter must be set when initializi
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.pet.update_pet(request={
+        "name": "doggie",
+        "photo_urls": [
+            "<value>",
+            "<value>",
+        ],
+        "id": 10,
+        "category": {
+            "id": 1,
+            "name": "Dogs",
+        },
+    })
 
-res = s.pet.update_pet(request={
-    "name": "doggie",
-    "photo_urls": [
-        "<value>",
-        "<value>",
-    ],
-    "id": 10,
-    "category": {
-        "id": 1,
-        "name": "Dogs",
-    },
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 <!-- End Authentication [security] -->
@@ -450,15 +446,14 @@ Certain SDK methods accept file objects as part of a request body or multi-part 
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.pet.upload_file(pet_id=565380)
 
-res = s.pet.upload_file(pet_id=565380)
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 <!-- End File uploads [file-upload] -->
@@ -473,27 +468,26 @@ To change the default retry strategy for a single API call, simply provide a `Re
 from petstore import Petstore
 from petstore.utils import BackoffStrategy, RetryConfig
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
-
-res = s.pet.update_pet(request={
-    "name": "doggie",
-    "photo_urls": [
-        "<value>",
-        "<value>",
-    ],
-    "id": 10,
-    "category": {
-        "id": 1,
-        "name": "Dogs",
+) as s:
+    res = s.pet.update_pet(request={
+        "name": "doggie",
+        "photo_urls": [
+            "<value>",
+            "<value>",
+        ],
+        "id": 10,
+        "category": {
+            "id": 1,
+            "name": "Dogs",
+        },
     },
-},
-    RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
+        RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -502,27 +496,26 @@ If you'd like to override the default retry strategy for all operations that sup
 from petstore import Petstore
 from petstore.utils import BackoffStrategy, RetryConfig
 
-s = Petstore(
+with Petstore(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.pet.update_pet(request={
+        "name": "doggie",
+        "photo_urls": [
+            "<value>",
+            "<value>",
+        ],
+        "id": 10,
+        "category": {
+            "id": 1,
+            "name": "Dogs",
+        },
+    })
 
-res = s.pet.update_pet(request={
-    "name": "doggie",
-    "photo_urls": [
-        "<value>",
-        "<value>",
-    ],
-    "id": 10,
-    "category": {
-        "id": 1,
-        "name": "Dogs",
-    },
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 <!-- End Retries [retries] -->

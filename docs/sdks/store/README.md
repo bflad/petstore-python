@@ -24,15 +24,14 @@ Returns a map of status codes to quantities
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.store.get_inventory()
 
-res = s.store.get_inventory()
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -64,20 +63,19 @@ Place a new order in the store
 import petstore
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.store.place_order(request={
+        "id": 10,
+        "pet_id": 198772,
+        "quantity": 7,
+        "status": petstore.OrderStatus.APPROVED,
+    })
 
-res = s.store.place_order(request={
-    "id": 10,
-    "pet_id": 198772,
-    "quantity": 7,
-    "status": petstore.OrderStatus.APPROVED,
-})
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -109,15 +107,14 @@ For valid response try integer IDs with value <= 5 or > 10. Other values will ge
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.store.get_order_by_id(order_id=614993)
 
-res = s.store.get_order_by_id(order_id=614993)
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
@@ -150,15 +147,14 @@ For valid response try integer IDs with value < 1000. Anything above 1000 or non
 ```python
 from petstore import Petstore
 
-s = Petstore(
+with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-)
+) as s:
+    res = s.store.delete_order(order_id=127902)
 
-res = s.store.delete_order(order_id=127902)
-
-if res is not None:
-    # handle response
-    pass
+    if res is not None:
+        # handle response
+        pass
 
 ```
 
