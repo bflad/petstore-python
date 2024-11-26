@@ -17,8 +17,22 @@ generation:
     oAuth2PasswordEnabled: false
   mockServer:
     disabled: false
+mockserver:
+  version: ""
+  clientServerStatusCodesAsErrors: true
+  imports:
+    option: openapi
+    paths:
+      callbacks: models/callbacks
+      errors: models/sdkerrors
+      operations: models/operations
+      shared: models/components
+      webhooks: models/webhooks
+  inputModelSuffix: input
+  outputModelSuffix: output
+  responseFormat: envelope-http
 python:
-  version: 0.3.0
+  version: 0.3.1
   additionalDependencies:
     dev: {}
     main: {}
