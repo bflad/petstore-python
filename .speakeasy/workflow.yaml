@@ -12,5 +12,5 @@ targets:
         source: petstore-oas
         codeSamples:
             registry:
-                location: registry.speakeasyapi.dev/playground-wnq/playground-testing/petstore-oas-code-samples
+                location: registry.speakeasyapi.dev/playground-wnq/playground-testing/petstore-oas-python-code-samples
             blocking: false
