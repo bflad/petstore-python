@@ -3,10 +3,12 @@ id: 49e4134f-8a68-4822-9090-ea41d8f239dc
 management:
   docChecksum: b57ac94779384524a88daa2f5dad9fa6
   docVersion: 1.0.0
-  speakeasyVersion: 1.448.1
-  generationVersion: 2.466.1
-  releaseVersion: 0.4.1
-  configChecksum: b06719d8fad71667aeb11a829277b79b
+  speakeasyVersion: 1.449.0
+  generationVersion: 2.467.4
+  releaseVersion: 0.4.2
+  configChecksum: 3bda550019d5234374f6229b1fd6e854
+  repoURL: https://github.com/bflad/petstore-python.git
+  installationURL: https://github.com/bflad/petstore-python.git
 features:
   python:
     additionalDependencies: 1.0.0
