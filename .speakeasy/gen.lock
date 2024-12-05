@@ -311,21 +311,3 @@ examples:
           application/json: {"status": 401, "error": "Unauthorized"}
         "404":
           application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
-generatedTests:
-  updatePet: "2024-11-26T14:16:24-05:00"
-  addPet: "2024-11-26T14:16:24-05:00"
-  findPetsByStatus: "2024-11-26T14:16:24-05:00"
-  findPetsByTags: "2024-11-26T14:16:24-05:00"
-  getPetById: "2024-11-26T14:16:24-05:00"
-  deletePet: "2024-11-26T14:16:24-05:00"
-  getInventory: "2024-11-26T14:16:24-05:00"
-  placeOrder: "2024-11-26T14:16:24-05:00"
-  getOrderById: "2024-11-26T14:16:24-05:00"
-  deleteOrder: "2024-11-26T14:16:24-05:00"
-  createUser: "2024-11-26T14:16:24-05:00"
-  createUsersWithListInput: "2024-11-26T14:16:24-05:00"
-  loginUser: "2024-11-26T14:16:24-05:00"
-  logoutUser: "2024-11-26T14:16:24-05:00"
-  getUserByName: "2024-11-26T14:16:24-05:00"
-  updateUser: "2024-11-26T14:16:24-05:00"
-  deleteUser: "2024-11-26T14:16:24-05:00"
