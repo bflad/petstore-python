@@ -1,17 +1,17 @@
 lockVersion: 2.0.0
 id: 49e4134f-8a68-4822-9090-ea41d8f239dc
 management:
-  docChecksum: b57ac94779384524a88daa2f5dad9fa6
+  docChecksum: 12f3c702a2ae2b49d11fc62baec64aa2
   docVersion: 1.0.0
-  speakeasyVersion: 1.448.1
-  generationVersion: 2.466.1
+  speakeasyVersion: 1.452.0
+  generationVersion: 2.472.1
   releaseVersion: 0.4.1
-  configChecksum: b06719d8fad71667aeb11a829277b79b
+  configChecksum: 353c65475fad736701b0e7106a74c8d6
 features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.5
-    core: 5.6.8
+    core: 5.6.9
     defaultEnabledRetries: 0.2.0
     devContainers: 3.0.0
     enumUnions: 0.1.0
@@ -22,11 +22,9 @@ features:
     globalSecurityFlattening: 1.0.0
     globalServerURLs: 3.0.0
     methodArguments: 1.0.2
-    mockServer: 0.1.0
     responseFormat: 1.0.1
     retries: 3.0.2
     sdkHooks: 1.0.0
-    tests: 1.7.0
     uploadStreams: 1.0.0
 generatedFiles:
   - .devcontainer/README.md
@@ -126,96 +124,6 @@ generatedFiles:
   - src/petstore/utils/serializers.py
   - src/petstore/utils/url.py
   - src/petstore/utils/values.py
-  - tests/__init__.py
-  - tests/mockserver/Dockerfile
-  - tests/mockserver/Makefile
-  - tests/mockserver/README.md
-  - tests/mockserver/go.mod
-  - tests/mockserver/go.sum
-  - tests/mockserver/internal/handler/assert/contenttype.go
-  - tests/mockserver/internal/handler/assert/header.go
-  - tests/mockserver/internal/handler/assert/parameter.go
-  - tests/mockserver/internal/handler/assert/pointer.go
-  - tests/mockserver/internal/handler/assert/security.go
-  - tests/mockserver/internal/handler/doc.go
-  - tests/mockserver/internal/handler/generated_handler.go
-  - tests/mockserver/internal/handler/generated_handlers.go
-  - tests/mockserver/internal/handler/pathdeletepetpetid.go
-  - tests/mockserver/internal/handler/pathdeletestoreorderorderid.go
-  - tests/mockserver/internal/handler/pathdeleteuserusername.go
-  - tests/mockserver/internal/handler/pathgetpetfindbystatus.go
-  - tests/mockserver/internal/handler/pathgetpetfindbytags.go
-  - tests/mockserver/internal/handler/pathgetpetpetid.go
-  - tests/mockserver/internal/handler/pathgetstoreinventory.go
-  - tests/mockserver/internal/handler/pathgetstoreorderorderid.go
-  - tests/mockserver/internal/handler/pathgetuserlogin.go
-  - tests/mockserver/internal/handler/pathgetuserlogout.go
-  - tests/mockserver/internal/handler/pathgetuserusername.go
-  - tests/mockserver/internal/handler/pathpostpet.go
-  - tests/mockserver/internal/handler/pathpoststoreorder.go
-  - tests/mockserver/internal/handler/pathpostuser.go
-  - tests/mockserver/internal/handler/pathpostusercreatewithlist.go
-  - tests/mockserver/internal/handler/pathputpet.go
-  - tests/mockserver/internal/handler/pathputuserusername.go
-  - tests/mockserver/internal/handler/values/files.go
-  - tests/mockserver/internal/logging/doc.go
-  - tests/mockserver/internal/logging/formats.go
-  - tests/mockserver/internal/logging/http_file.go
-  - tests/mockserver/internal/logging/http_logger.go
-  - tests/mockserver/internal/logging/levels.go
-  - tests/mockserver/internal/logging/logger.go
-  - tests/mockserver/internal/logging/oas_operation.go
-  - tests/mockserver/internal/logging/oas_operation_call.go
-  - tests/mockserver/internal/sdk/models/components/apiresponse.go
-  - tests/mockserver/internal/sdk/models/components/category.go
-  - tests/mockserver/internal/sdk/models/components/httpmetadata.go
-  - tests/mockserver/internal/sdk/models/components/order.go
-  - tests/mockserver/internal/sdk/models/components/pet.go
-  - tests/mockserver/internal/sdk/models/components/security.go
-  - tests/mockserver/internal/sdk/models/components/tag.go
-  - tests/mockserver/internal/sdk/models/components/user.go
-  - tests/mockserver/internal/sdk/models/operations/addpet.go
-  - tests/mockserver/internal/sdk/models/operations/createuser.go
-  - tests/mockserver/internal/sdk/models/operations/createuserswithlistinput.go
-  - tests/mockserver/internal/sdk/models/operations/deleteorder.go
-  - tests/mockserver/internal/sdk/models/operations/deletepet.go
-  - tests/mockserver/internal/sdk/models/operations/deleteuser.go
-  - tests/mockserver/internal/sdk/models/operations/findpetsbystatus.go
-  - tests/mockserver/internal/sdk/models/operations/findpetsbytags.go
-  - tests/mockserver/internal/sdk/models/operations/getinventory.go
-  - tests/mockserver/internal/sdk/models/operations/getorderbyid.go
-  - tests/mockserver/internal/sdk/models/operations/getpetbyid.go
-  - tests/mockserver/internal/sdk/models/operations/getuserbyname.go
-  - tests/mockserver/internal/sdk/models/operations/loginuser.go
-  - tests/mockserver/internal/sdk/models/operations/logoutuser.go
-  - tests/mockserver/internal/sdk/models/operations/placeorder.go
-  - tests/mockserver/internal/sdk/models/operations/updatepet.go
-  - tests/mockserver/internal/sdk/models/operations/updateuser.go
-  - tests/mockserver/internal/sdk/models/operations/uploadfile.go
-  - tests/mockserver/internal/sdk/models/sdkerrors/apierrorinvalidinput.go
-  - tests/mockserver/internal/sdk/models/sdkerrors/apierrornotfound.go
-  - tests/mockserver/internal/sdk/models/sdkerrors/apierrorunauthorized.go
-  - tests/mockserver/internal/sdk/types/bigint.go
-  - tests/mockserver/internal/sdk/types/date.go
-  - tests/mockserver/internal/sdk/types/datetime.go
-  - tests/mockserver/internal/sdk/types/decimal.go
-  - tests/mockserver/internal/sdk/types/pointers.go
-  - tests/mockserver/internal/sdk/utils/json.go
-  - tests/mockserver/internal/sdk/utils/reflect.go
-  - tests/mockserver/internal/sdk/utils/sort.go
-  - tests/mockserver/internal/server/doc.go
-  - tests/mockserver/internal/server/generated_handlers.go
-  - tests/mockserver/internal/server/internal_handlers.go
-  - tests/mockserver/internal/server/server.go
-  - tests/mockserver/internal/server/server_option.go
-  - tests/mockserver/internal/server/templates/log/index.html.tmpl
-  - tests/mockserver/internal/server/templates/log/operation.html.tmpl
-  - tests/mockserver/internal/server/templates/log/style.css.tmpl
-  - tests/mockserver/main.go
-  - tests/test_client.py
-  - tests/test_pet_sdk.py
-  - tests/test_store.py
-  - tests/test_user_sdk.py
 examples:
   updatePet:
     speakeasy-default-update-pet:

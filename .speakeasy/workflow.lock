@@ -1,9 +1,9 @@
-speakeasyVersion: 1.448.1
+speakeasyVersion: 1.452.0
 sources:
     petstore-oas:
         sourceNamespace: petstore-oas
-        sourceRevisionDigest: sha256:115894d9ad469fbae45be61084c3309dc81ecab818c61ae415a28e0d7f48b910
-        sourceBlobDigest: sha256:e0c15145843ccd1a93b3db5a9189468ec218daf70cf0527bd95c78692130b0d6
+        sourceRevisionDigest: sha256:985013a710c4786e7c5f3601bb76d7ba15048f8406ddea015cbb1655cd3a3ecb
+        sourceBlobDigest: sha256:c8b4f4f5c3276d985359490bda43dae95b8e23e6d0bde8b76eedf5a188b6ece2
         tags:
             - latest
             - 1.0.0
@@ -11,10 +11,10 @@ targets:
     petstore:
         source: petstore-oas
         sourceNamespace: petstore-oas
-        sourceRevisionDigest: sha256:115894d9ad469fbae45be61084c3309dc81ecab818c61ae415a28e0d7f48b910
-        sourceBlobDigest: sha256:e0c15145843ccd1a93b3db5a9189468ec218daf70cf0527bd95c78692130b0d6
+        sourceRevisionDigest: sha256:985013a710c4786e7c5f3601bb76d7ba15048f8406ddea015cbb1655cd3a3ecb
+        sourceBlobDigest: sha256:c8b4f4f5c3276d985359490bda43dae95b8e23e6d0bde8b76eedf5a188b6ece2
         codeSamplesNamespace: petstore-oas-python-code-samples
-        codeSamplesRevisionDigest: sha256:0e8aef9a07504d45ce66abba074d6702bc813cc2cefc286f77382fef42a94605
+        codeSamplesRevisionDigest: sha256:08c1e5959d1dc16b3b49e1c44643088d853c6da69e8bdfb4d39bcafb4392c199
 workflow:
     workflowVersion: 1.0.0
     speakeasyVersion: latest
