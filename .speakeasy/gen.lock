@@ -3,10 +3,12 @@ id: 49e4134f-8a68-4822-9090-ea41d8f239dc
 management:
   docChecksum: 12f3c702a2ae2b49d11fc62baec64aa2
   docVersion: 1.0.0
-  speakeasyVersion: 1.452.0
-  generationVersion: 2.472.1
-  releaseVersion: 0.4.1
-  configChecksum: 353c65475fad736701b0e7106a74c8d6
+  speakeasyVersion: 1.453.3
+  generationVersion: 2.474.6
+  releaseVersion: 0.4.2
+  configChecksum: df2204d7ccf36965bf17f0d647b93b7d
+  repoURL: https://github.com/bflad/petstore-python.git
+  installationURL: https://github.com/bflad/petstore-python.git
 features:
   python:
     additionalDependencies: 1.0.0
@@ -311,3 +313,4 @@ examples:
           application/json: {"status": 401, "error": "Unauthorized"}
         "404":
           application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
+generatedTests: {}
