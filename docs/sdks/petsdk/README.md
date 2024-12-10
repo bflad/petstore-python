@@ -29,8 +29,8 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as petstore:
+    res = petstore.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -80,8 +80,8 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.add_pet(request={
+) as petstore:
+    res = petstore.pet.add_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -127,8 +127,8 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.find_pets_by_status()
+) as petstore:
+    res = petstore.pet.find_pets_by_status()
 
     if res is not None:
         # handle response
@@ -167,8 +167,8 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.find_pets_by_tags()
+) as petstore:
+    res = petstore.pet.find_pets_by_tags()
 
     if res is not None:
         # handle response
@@ -207,8 +207,8 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.get_pet_by_id(pet_id=504151)
+) as petstore:
+    res = petstore.pet.get_pet_by_id(pet_id=504151)
 
     if res is not None:
         # handle response
@@ -247,8 +247,8 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.delete_pet(pet_id=441876)
+) as petstore:
+    res = petstore.pet.delete_pet(pet_id=441876)
 
     if res is not None:
         # handle response
@@ -288,8 +288,8 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.upload_file(pet_id=565380)
+) as petstore:
+    res = petstore.pet.upload_file(pet_id=565380)
 
     if res is not None:
         # handle response
