@@ -5,8 +5,8 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as petstore:
+    res = petstore.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -35,8 +35,8 @@ from petstore import Petstore
 async def main():
     async with Petstore(
         api_key="<YOUR_API_KEY_HERE>",
-    ) as s:
-        res = await s.pet.update_pet_async(request={
+    ) as petstore:
+        res = await petstore.pet.update_pet_async(request={
             "name": "doggie",
             "photo_urls": [
                 "<value>",
