@@ -61,7 +61,7 @@ The SDK can be installed with either *pip* or *poetry* package managers.
 *PIP* is the default package installer for Python, enabling easy installation and management of packages from PyPI via the command line.
 
 ```bash
-pip install git+<UNSET>.git
+pip install git+https://github.com/bflad/petstore-python.git
 ```
 
 ### Poetry
@@ -69,7 +69,7 @@ pip install git+<UNSET>.git
 *Poetry* is a modern tool that simplifies dependency management and package publishing by using a single `pyproject.toml` file to handle project metadata and dependencies.
 
 ```bash
-poetry add git+<UNSET>.git
+poetry add git+https://github.com/bflad/petstore-python.git
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -94,8 +94,8 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as petstore:
+    res = petstore.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -124,8 +124,8 @@ from petstore import Petstore
 async def main():
     async with Petstore(
         api_key="<YOUR_API_KEY_HERE>",
-    ) as s:
-        res = await s.pet.update_pet_async(request={
+    ) as petstore:
+        res = await petstore.pet.update_pet_async(request={
             "name": "doggie",
             "photo_urls": [
                 "<value>",
@@ -213,10 +213,10 @@ from petstore import Petstore, models
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
+) as petstore:
     res = None
     try:
-        res = s.pet.update_pet(request={
+        res = petstore.pet.update_pet(request={
             "name": "doggie",
             "photo_urls": [
                 "<value>",
@@ -270,8 +270,8 @@ from petstore import Petstore
 with Petstore(
     server_idx=1,
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as petstore:
+    res = petstore.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -299,8 +299,8 @@ from petstore import Petstore
 with Petstore(
     server_url="http://localhost:18080",
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as petstore:
+    res = petstore.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -418,8 +418,8 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as petstore:
+    res = petstore.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -454,8 +454,8 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.upload_file(pet_id=565380)
+) as petstore:
+    res = petstore.pet.upload_file(pet_id=565380)
 
     if res is not None:
         # handle response
@@ -476,8 +476,8 @@ from petstore.utils import BackoffStrategy, RetryConfig
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as petstore:
+    res = petstore.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -505,8 +505,8 @@ from petstore.utils import BackoffStrategy, RetryConfig
 with Petstore(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as petstore:
+    res = petstore.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
