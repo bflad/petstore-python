@@ -30,7 +30,7 @@ mockserver:
   outputModelSuffix: output
   responseFormat: envelope-http
 python:
-  version: 0.4.1
+  version: 0.5.0
   additionalDependencies:
     dev: {}
     main: {}
