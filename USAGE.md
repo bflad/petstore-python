@@ -5,8 +5,9 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as petstore:
+
+    res = petstore.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -19,9 +20,10 @@ with Petstore(
         },
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 ```
 
 </br>
@@ -35,8 +37,9 @@ from petstore import Petstore
 async def main():
     async with Petstore(
         api_key="<YOUR_API_KEY_HERE>",
-    ) as s:
-        res = await s.pet.update_pet_async(request={
+    ) as petstore:
+
+        res = await petstore.pet.update_pet_async(request={
             "name": "doggie",
             "photo_urls": [
                 "<value>",
@@ -49,9 +52,10 @@ async def main():
             },
         })
 
-        if res is not None:
-            # handle response
-            pass
+        assert res is not None
+
+        # Handle response
+        print(res)
 
 asyncio.run(main())
 ```
