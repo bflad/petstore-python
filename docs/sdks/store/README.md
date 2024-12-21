@@ -26,12 +26,14 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.store.get_inventory()
+) as petstore:
 
-    if res is not None:
-        # handle response
-        pass
+    res = petstore.store.get_inventory()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -65,17 +67,19 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.store.place_order(request={
+) as petstore:
+
+    res = petstore.store.place_order(request={
         "id": 10,
         "pet_id": 198772,
         "quantity": 7,
         "status": petstore.OrderStatus.APPROVED,
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -109,12 +113,14 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.store.get_order_by_id(order_id=614993)
+) as petstore:
 
-    if res is not None:
-        # handle response
-        pass
+    res = petstore.store.get_order_by_id(order_id=614993)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -149,12 +155,14 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.store.delete_order(order_id=127902)
+) as petstore:
 
-    if res is not None:
-        # handle response
-        pass
+    res = petstore.store.delete_order(order_id=127902)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

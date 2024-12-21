@@ -26,8 +26,9 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.user.create_user(request={
+) as petstore:
+
+    res = petstore.user.create_user(request={
         "id": 10,
         "username": "theUser",
         "first_name": "John",
@@ -38,9 +39,10 @@ with Petstore(
         "user_status": 1,
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -72,8 +74,9 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.user.create_users_with_list_input(request=[
+) as petstore:
+
+    res = petstore.user.create_users_with_list_input(request=[
         {
             "id": 10,
             "username": "theUser",
@@ -86,9 +89,10 @@ with Petstore(
         },
     ])
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -120,12 +124,12 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.user.login_user()
+) as petstore:
 
-    if res is not None:
-        # handle response
-        pass
+    res = petstore.user.login_user()
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -161,8 +165,9 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    s.user.logout_user()
+) as petstore:
+
+    petstore.user.logout_user()
 
     # Use the SDK ...
 
@@ -191,12 +196,14 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.user.get_user_by_name(username="Zachery_Lubowitz15")
+) as petstore:
 
-    if res is not None:
-        # handle response
-        pass
+    res = petstore.user.get_user_by_name(username="Zachery_Lubowitz15")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -231,8 +238,9 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    s.user.update_user(username="Dandre_Hand41", user={
+) as petstore:
+
+    petstore.user.update_user(username="Dandre_Hand41", user={
         "id": 10,
         "username": "theUser",
         "first_name": "John",
@@ -272,12 +280,14 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.user.delete_user(username="Demetris_Schmitt")
+) as petstore:
 
-    if res is not None:
-        # handle response
-        pass
+    res = petstore.user.delete_user(username="Demetris_Schmitt")
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

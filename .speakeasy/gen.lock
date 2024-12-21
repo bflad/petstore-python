@@ -3,15 +3,17 @@ id: 49e4134f-8a68-4822-9090-ea41d8f239dc
 management:
   docChecksum: 12f3c702a2ae2b49d11fc62baec64aa2
   docVersion: 1.0.0
-  speakeasyVersion: 1.452.0
-  generationVersion: 2.472.1
-  releaseVersion: 0.4.1
-  configChecksum: 353c65475fad736701b0e7106a74c8d6
+  speakeasyVersion: 1.459.2
+  generationVersion: 2.483.1
+  releaseVersion: 0.5.0
+  configChecksum: d36accd71507d825980190fd40beab96
+  repoURL: https://github.com/bflad/petstore-python.git
+  installationURL: https://github.com/bflad/petstore-python.git
 features:
   python:
     additionalDependencies: 1.0.0
     constsAndDefaults: 1.0.5
-    core: 5.6.9
+    core: 5.7.4
     defaultEnabledRetries: 0.2.0
     devContainers: 3.0.0
     enumUnions: 0.1.0
@@ -20,7 +22,7 @@ features:
     globalSecurity: 3.0.2
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
-    globalServerURLs: 3.0.0
+    globalServerURLs: 3.1.0
     methodArguments: 1.0.2
     responseFormat: 1.0.1
     retries: 3.0.2
@@ -202,6 +204,9 @@ examples:
         path:
           petId: 565380
         query: {}
+      responses:
+        "200":
+          application/json: {}
   getInventory:
     speakeasy-default-get-inventory:
       responses:
@@ -311,3 +316,4 @@ examples:
           application/json: {"status": 401, "error": "Unauthorized"}
         "404":
           application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
+generatedTests: {}

@@ -54,6 +54,10 @@ For more information about the API: [Find out more about Swagger](http://swagger
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
+> [!TIP]
+> To finish publishing your SDK to PyPI you must [run your first generation action](https://www.speakeasy.com/docs/github-setup#step-by-step-guide).
+
+
 The SDK can be installed with either *pip* or *poetry* package managers.
 
 ### PIP
@@ -61,7 +65,7 @@ The SDK can be installed with either *pip* or *poetry* package managers.
 *PIP* is the default package installer for Python, enabling easy installation and management of packages from PyPI via the command line.
 
 ```bash
-pip install git+<UNSET>.git
+pip install git+https://github.com/bflad/petstore-python.git
 ```
 
 ### Poetry
@@ -69,7 +73,7 @@ pip install git+<UNSET>.git
 *Poetry* is a modern tool that simplifies dependency management and package publishing by using a single `pyproject.toml` file to handle project metadata and dependencies.
 
 ```bash
-poetry add git+<UNSET>.git
+poetry add git+https://github.com/bflad/petstore-python.git
 ```
 <!-- End SDK Installation [installation] -->
 
@@ -94,8 +98,9 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as petstore:
+
+    res = petstore.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -108,9 +113,10 @@ with Petstore(
         },
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 ```
 
 </br>
@@ -124,8 +130,9 @@ from petstore import Petstore
 async def main():
     async with Petstore(
         api_key="<YOUR_API_KEY_HERE>",
-    ) as s:
-        res = await s.pet.update_pet_async(request={
+    ) as petstore:
+
+        res = await petstore.pet.update_pet_async(request={
             "name": "doggie",
             "photo_urls": [
                 "<value>",
@@ -138,9 +145,10 @@ async def main():
             },
         })
 
-        if res is not None:
-            # handle response
-            pass
+        assert res is not None
+
+        # Handle response
+        print(res)
 
 asyncio.run(main())
 ```
@@ -213,10 +221,11 @@ from petstore import Petstore, models
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
+) as petstore:
     res = None
     try:
-        res = s.pet.update_pet(request={
+
+        res = petstore.pet.update_pet(request={
             "name": "doggie",
             "photo_urls": [
                 "<value>",
@@ -229,9 +238,10 @@ with Petstore(
             },
         })
 
-        if res is not None:
-            # handle response
-            pass
+        assert res is not None
+
+        # Handle response
+        print(res)
 
     except models.APIErrorInvalidInput as e:
         # handle e.data: models.APIErrorInvalidInputData
@@ -270,8 +280,9 @@ from petstore import Petstore
 with Petstore(
     server_idx=1,
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as petstore:
+
+    res = petstore.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -284,9 +295,10 @@ with Petstore(
         },
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -299,8 +311,9 @@ from petstore import Petstore
 with Petstore(
     server_url="http://localhost:18080",
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as petstore:
+
+    res = petstore.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -313,9 +326,10 @@ with Petstore(
         },
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 <!-- End Server Selection [server] -->
@@ -418,8 +432,9 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as petstore:
+
+    res = petstore.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -432,9 +447,10 @@ with Petstore(
         },
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 <!-- End Authentication [security] -->
@@ -454,12 +470,14 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.upload_file(pet_id=565380)
+) as petstore:
 
-    if res is not None:
-        # handle response
-        pass
+    res = petstore.pet.upload_file(pet_id=565380)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 <!-- End File uploads [file-upload] -->
@@ -476,8 +494,9 @@ from petstore.utils import BackoffStrategy, RetryConfig
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as petstore:
+
+    res = petstore.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -491,9 +510,10 @@ with Petstore(
     },
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -505,8 +525,9 @@ from petstore.utils import BackoffStrategy, RetryConfig
 with Petstore(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as petstore:
+
+    res = petstore.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -519,9 +540,10 @@ with Petstore(
         },
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 <!-- End Retries [retries] -->
