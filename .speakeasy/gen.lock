@@ -5,8 +5,10 @@ management:
   docVersion: 1.0.0
   speakeasyVersion: 1.452.0
   generationVersion: 2.472.1
-  releaseVersion: 0.4.1
-  configChecksum: 353c65475fad736701b0e7106a74c8d6
+  releaseVersion: 0.5.1
+  configChecksum: 20a9689376ae987304fc1b297c50d80b
+  repoURL: https://github.com/bflad/petstore-python.git
+  installationURL: https://github.com/bflad/petstore-python.git
 features:
   python:
     additionalDependencies: 1.0.0
@@ -202,6 +204,9 @@ examples:
         path:
           petId: 565380
         query: {}
+      responses:
+        "200":
+          application/json: {}
   getInventory:
     speakeasy-default-get-inventory:
       responses:
@@ -311,3 +316,4 @@ examples:
           application/json: {"status": 401, "error": "Unauthorized"}
         "404":
           application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
+generatedTests: {}
