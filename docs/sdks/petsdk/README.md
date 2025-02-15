@@ -29,8 +29,9 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as p_client:
+
+    res = p_client.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -43,9 +44,10 @@ with Petstore(
         },
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -80,8 +82,9 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.add_pet(request={
+) as p_client:
+
+    res = p_client.pet.add_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -93,9 +96,10 @@ with Petstore(
         },
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -127,12 +131,14 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.find_pets_by_status()
+) as p_client:
 
-    if res is not None:
-        # handle response
-        pass
+    res = p_client.pet.find_pets_by_status()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -167,12 +173,14 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.find_pets_by_tags()
+) as p_client:
 
-    if res is not None:
-        # handle response
-        pass
+    res = p_client.pet.find_pets_by_tags()
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -207,12 +215,14 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.get_pet_by_id(pet_id=504151)
+) as p_client:
 
-    if res is not None:
-        # handle response
-        pass
+    res = p_client.pet.get_pet_by_id(pet_id=504151)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -247,12 +257,14 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.delete_pet(pet_id=441876)
+) as p_client:
 
-    if res is not None:
-        # handle response
-        pass
+    res = p_client.pet.delete_pet(pet_id=441876)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -288,12 +300,14 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.upload_file(pet_id=565380)
+) as p_client:
 
-    if res is not None:
-        # handle response
-        pass
+    res = p_client.pet.upload_file(pet_id=565380)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 

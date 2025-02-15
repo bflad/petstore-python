@@ -4,7 +4,7 @@ from .basesdk import BaseSDK
 from petstore import models, utils
 from petstore._hooks import HookContext
 from petstore.types import BaseModel, OptionalNullable, UNSET
-from typing import Any, List, Optional, Union, cast
+from typing import Any, List, Mapping, Optional, Union, cast
 
 
 class UserSDK(BaseSDK):
@@ -17,6 +17,7 @@ class UserSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.User]:
         r"""Create user
 
@@ -26,6 +27,7 @@ class UserSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -39,7 +41,7 @@ class UserSDK(BaseSDK):
             request = utils.unmarshal(request, Optional[models.User])
         request = cast(Optional[models.User], request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/user",
             base_url=base_url,
@@ -50,6 +52,7 @@ class UserSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, True, "json", Optional[models.User]
@@ -67,6 +70,7 @@ class UserSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="createUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -78,7 +82,12 @@ class UserSDK(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -100,6 +109,7 @@ class UserSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.User]:
         r"""Create user
 
@@ -109,6 +119,7 @@ class UserSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -122,7 +133,7 @@ class UserSDK(BaseSDK):
             request = utils.unmarshal(request, Optional[models.User])
         request = cast(Optional[models.User], request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/user",
             base_url=base_url,
@@ -133,6 +144,7 @@ class UserSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, True, "json", Optional[models.User]
@@ -150,6 +162,7 @@ class UserSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="createUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -161,7 +174,12 @@ class UserSDK(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -183,6 +201,7 @@ class UserSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.User]:
         r"""Creates list of users with given input array
 
@@ -192,6 +211,7 @@ class UserSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -205,7 +225,7 @@ class UserSDK(BaseSDK):
             request = utils.unmarshal(request, Optional[List[models.User]])
         request = cast(Optional[List[models.User]], request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/user/createWithList",
             base_url=base_url,
@@ -216,6 +236,7 @@ class UserSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, True, "json", Optional[List[models.User]]
@@ -233,6 +254,7 @@ class UserSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="createUsersWithListInput",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -244,7 +266,12 @@ class UserSDK(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -266,6 +293,7 @@ class UserSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.User]:
         r"""Creates list of users with given input array
 
@@ -275,6 +303,7 @@ class UserSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -288,7 +317,7 @@ class UserSDK(BaseSDK):
             request = utils.unmarshal(request, Optional[List[models.User]])
         request = cast(Optional[List[models.User]], request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/user/createWithList",
             base_url=base_url,
@@ -299,6 +328,7 @@ class UserSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, True, "json", Optional[List[models.User]]
@@ -316,6 +346,7 @@ class UserSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="createUsersWithListInput",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -327,7 +358,12 @@ class UserSDK(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -350,6 +386,7 @@ class UserSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.LoginUserResponse:
         r"""Logs user into the system
 
@@ -358,6 +395,7 @@ class UserSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -372,7 +410,7 @@ class UserSDK(BaseSDK):
             password=password,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/user/login",
             base_url=base_url,
@@ -383,6 +421,7 @@ class UserSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -397,6 +436,7 @@ class UserSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="loginUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -406,22 +446,33 @@ class UserSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return models.LoginUserResponse(
                 result=utils.unmarshal_json(http_res.text, Optional[str]),
                 headers=utils.get_response_headers(http_res.headers),
             )
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -444,6 +495,7 @@ class UserSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> models.LoginUserResponse:
         r"""Logs user into the system
 
@@ -452,6 +504,7 @@ class UserSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -466,7 +519,7 @@ class UserSDK(BaseSDK):
             password=password,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/user/login",
             base_url=base_url,
@@ -477,6 +530,7 @@ class UserSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -491,6 +545,7 @@ class UserSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="loginUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -500,22 +555,33 @@ class UserSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return models.LoginUserResponse(
                 result=utils.unmarshal_json(http_res.text, Optional[str]),
                 headers=utils.get_response_headers(http_res.headers),
             )
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -536,12 +602,14 @@ class UserSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ):
         r"""Logs out current logged in user session
 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -550,7 +618,7 @@ class UserSDK(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/user/logout",
             base_url=base_url,
@@ -561,6 +629,7 @@ class UserSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="*/*",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -575,6 +644,7 @@ class UserSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="logoutUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -586,7 +656,12 @@ class UserSDK(BaseSDK):
 
         if utils.match_response(http_res, "200", "*"):
             return
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -607,12 +682,14 @@ class UserSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ):
         r"""Logs out current logged in user session
 
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -621,7 +698,7 @@ class UserSDK(BaseSDK):
 
         if server_url is not None:
             base_url = server_url
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/user/logout",
             base_url=base_url,
@@ -632,6 +709,7 @@ class UserSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="*/*",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -646,6 +724,7 @@ class UserSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="logoutUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -657,7 +736,12 @@ class UserSDK(BaseSDK):
 
         if utils.match_response(http_res, "200", "*"):
             return
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -679,6 +763,7 @@ class UserSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.User]:
         r"""Get user by user name
 
@@ -686,6 +771,7 @@ class UserSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -699,7 +785,7 @@ class UserSDK(BaseSDK):
             username=username,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/user/{username}",
             base_url=base_url,
@@ -710,6 +796,7 @@ class UserSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -724,6 +811,7 @@ class UserSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="getUserByName",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -733,19 +821,30 @@ class UserSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -767,6 +866,7 @@ class UserSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.User]:
         r"""Get user by user name
 
@@ -774,6 +874,7 @@ class UserSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -787,7 +888,7 @@ class UserSDK(BaseSDK):
             username=username,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/user/{username}",
             base_url=base_url,
@@ -798,6 +899,7 @@ class UserSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -812,6 +914,7 @@ class UserSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="getUserByName",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -821,19 +924,30 @@ class UserSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -856,6 +970,7 @@ class UserSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ):
         r"""Update user
 
@@ -866,6 +981,7 @@ class UserSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -880,7 +996,7 @@ class UserSDK(BaseSDK):
             user=utils.get_pydantic_model(user, Optional[models.User]),
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="PUT",
             path="/user/{username}",
             base_url=base_url,
@@ -891,6 +1007,7 @@ class UserSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="*/*",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.user, False, True, "json", Optional[models.User]
@@ -908,6 +1025,7 @@ class UserSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="updateUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -919,7 +1037,12 @@ class UserSDK(BaseSDK):
 
         if utils.match_response(http_res, "200", "*"):
             return
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -942,6 +1065,7 @@ class UserSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ):
         r"""Update user
 
@@ -952,6 +1076,7 @@ class UserSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -966,7 +1091,7 @@ class UserSDK(BaseSDK):
             user=utils.get_pydantic_model(user, Optional[models.User]),
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PUT",
             path="/user/{username}",
             base_url=base_url,
@@ -977,6 +1102,7 @@ class UserSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="*/*",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.user, False, True, "json", Optional[models.User]
@@ -994,6 +1120,7 @@ class UserSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="updateUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1005,7 +1132,12 @@ class UserSDK(BaseSDK):
 
         if utils.match_response(http_res, "200", "*"):
             return
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1027,6 +1159,7 @@ class UserSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.User]:
         r"""Delete user
 
@@ -1036,6 +1169,7 @@ class UserSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -1049,7 +1183,7 @@ class UserSDK(BaseSDK):
             username=username,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/user/{username}",
             base_url=base_url,
@@ -1060,6 +1194,7 @@ class UserSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -1074,6 +1209,7 @@ class UserSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="deleteUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1083,19 +1219,30 @@ class UserSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1117,6 +1264,7 @@ class UserSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.User]:
         r"""Delete user
 
@@ -1126,6 +1274,7 @@ class UserSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -1139,7 +1288,7 @@ class UserSDK(BaseSDK):
             username=username,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/user/{username}",
             base_url=base_url,
@@ -1150,6 +1299,7 @@ class UserSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -1164,6 +1314,7 @@ class UserSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="deleteUser",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1173,19 +1324,30 @@ class UserSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.User])
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res

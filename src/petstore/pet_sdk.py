@@ -5,7 +5,7 @@ import io
 from petstore import models, utils
 from petstore._hooks import HookContext
 from petstore.types import BaseModel, OptionalNullable, UNSET
-from typing import Any, IO, List, Optional, Union, cast
+from typing import Any, IO, List, Mapping, Optional, Union, cast
 
 
 class PetSDK(BaseSDK):
@@ -20,6 +20,7 @@ class PetSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.Pet]:
         r"""Update an existing pet
 
@@ -29,6 +30,7 @@ class PetSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -42,7 +44,7 @@ class PetSDK(BaseSDK):
             request = utils.unmarshal(request, models.Pet)
         request = cast(models.Pet, request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="PUT",
             path="/pet",
             base_url=base_url,
@@ -53,6 +55,7 @@ class PetSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.Pet
@@ -70,6 +73,7 @@ class PetSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="updatePet",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -79,19 +83,30 @@ class PetSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Pet])
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -113,6 +128,7 @@ class PetSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.Pet]:
         r"""Update an existing pet
 
@@ -122,6 +138,7 @@ class PetSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -135,7 +152,7 @@ class PetSDK(BaseSDK):
             request = utils.unmarshal(request, models.Pet)
         request = cast(models.Pet, request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="PUT",
             path="/pet",
             base_url=base_url,
@@ -146,6 +163,7 @@ class PetSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.Pet
@@ -163,6 +181,7 @@ class PetSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="updatePet",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -172,19 +191,30 @@ class PetSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Pet])
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -206,6 +236,7 @@ class PetSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.Pet]:
         r"""Add a new pet to the store
 
@@ -215,6 +246,7 @@ class PetSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -228,7 +260,7 @@ class PetSDK(BaseSDK):
             request = utils.unmarshal(request, models.Pet)
         request = cast(models.Pet, request)
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/pet",
             base_url=base_url,
@@ -239,6 +271,7 @@ class PetSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.Pet
@@ -256,6 +289,7 @@ class PetSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="addPet",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -267,7 +301,12 @@ class PetSDK(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Pet])
-        if utils.match_response(http_res, ["405", "4XX", "5XX"], "*"):
+        if utils.match_response(http_res, ["405", "4XX"], "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -289,6 +328,7 @@ class PetSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.Pet]:
         r"""Add a new pet to the store
 
@@ -298,6 +338,7 @@ class PetSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -311,7 +352,7 @@ class PetSDK(BaseSDK):
             request = utils.unmarshal(request, models.Pet)
         request = cast(models.Pet, request)
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/pet",
             base_url=base_url,
@@ -322,6 +363,7 @@ class PetSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request, False, False, "json", models.Pet
@@ -339,6 +381,7 @@ class PetSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="addPet",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -350,7 +393,12 @@ class PetSDK(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Pet])
-        if utils.match_response(http_res, ["405", "4XX", "5XX"], "*"):
+        if utils.match_response(http_res, ["405", "4XX"], "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -372,6 +420,7 @@ class PetSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[List[models.Pet]]:
         r"""Finds Pets by status
 
@@ -381,6 +430,7 @@ class PetSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -394,7 +444,7 @@ class PetSDK(BaseSDK):
             status=status,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/pet/findByStatus",
             base_url=base_url,
@@ -405,6 +455,7 @@ class PetSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -419,6 +470,7 @@ class PetSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="findPetsByStatus",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -428,19 +480,30 @@ class PetSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[List[models.Pet]])
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -462,6 +525,7 @@ class PetSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[List[models.Pet]]:
         r"""Finds Pets by status
 
@@ -471,6 +535,7 @@ class PetSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -484,7 +549,7 @@ class PetSDK(BaseSDK):
             status=status,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/pet/findByStatus",
             base_url=base_url,
@@ -495,6 +560,7 @@ class PetSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -509,6 +575,7 @@ class PetSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="findPetsByStatus",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -518,19 +585,30 @@ class PetSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[List[models.Pet]])
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -552,6 +630,7 @@ class PetSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[List[models.Pet]]:
         r"""Finds Pets by tags
 
@@ -561,6 +640,7 @@ class PetSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -574,7 +654,7 @@ class PetSDK(BaseSDK):
             tags=tags,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/pet/findByTags",
             base_url=base_url,
@@ -585,6 +665,7 @@ class PetSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -599,6 +680,7 @@ class PetSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="findPetsByTags",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -608,19 +690,30 @@ class PetSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[List[models.Pet]])
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -642,6 +735,7 @@ class PetSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[List[models.Pet]]:
         r"""Finds Pets by tags
 
@@ -651,6 +745,7 @@ class PetSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -664,7 +759,7 @@ class PetSDK(BaseSDK):
             tags=tags,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/pet/findByTags",
             base_url=base_url,
@@ -675,6 +770,7 @@ class PetSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -689,6 +785,7 @@ class PetSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="findPetsByTags",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -698,19 +795,30 @@ class PetSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[List[models.Pet]])
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -732,6 +840,7 @@ class PetSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.Pet]:
         r"""Find pet by ID
 
@@ -741,6 +850,7 @@ class PetSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -754,7 +864,7 @@ class PetSDK(BaseSDK):
             pet_id=pet_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="GET",
             path="/pet/{petId}",
             base_url=base_url,
@@ -765,6 +875,7 @@ class PetSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -779,6 +890,7 @@ class PetSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="getPetById",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -788,19 +900,30 @@ class PetSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Pet])
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -822,6 +945,7 @@ class PetSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.Pet]:
         r"""Find pet by ID
 
@@ -831,6 +955,7 @@ class PetSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -844,7 +969,7 @@ class PetSDK(BaseSDK):
             pet_id=pet_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="GET",
             path="/pet/{petId}",
             base_url=base_url,
@@ -855,6 +980,7 @@ class PetSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -869,6 +995,7 @@ class PetSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="getPetById",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -878,19 +1005,30 @@ class PetSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Pet])
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -913,6 +1051,7 @@ class PetSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.Pet]:
         r"""Deletes a pet
 
@@ -921,6 +1060,7 @@ class PetSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -935,7 +1075,7 @@ class PetSDK(BaseSDK):
             pet_id=pet_id,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="DELETE",
             path="/pet/{petId}",
             base_url=base_url,
@@ -946,6 +1086,7 @@ class PetSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -960,6 +1101,7 @@ class PetSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="deletePet",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -969,19 +1111,30 @@ class PetSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Pet])
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1004,6 +1157,7 @@ class PetSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.Pet]:
         r"""Deletes a pet
 
@@ -1012,6 +1166,7 @@ class PetSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -1026,7 +1181,7 @@ class PetSDK(BaseSDK):
             pet_id=pet_id,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="DELETE",
             path="/pet/{petId}",
             base_url=base_url,
@@ -1037,6 +1192,7 @@ class PetSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             timeout_ms=timeout_ms,
         )
@@ -1051,6 +1207,7 @@ class PetSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="deletePet",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1060,19 +1217,30 @@ class PetSDK(BaseSDK):
             retry_config=retry_config,
         )
 
-        data: Any = None
+        response_data: Any = None
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.Pet])
         if utils.match_response(http_res, "400", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorInvalidInputData)
-            raise models.APIErrorInvalidInput(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorInvalidInputData
+            )
+            raise models.APIErrorInvalidInput(data=response_data)
         if utils.match_response(http_res, "401", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorUnauthorizedData)
-            raise models.APIErrorUnauthorized(data=data)
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorUnauthorizedData
+            )
+            raise models.APIErrorUnauthorized(data=response_data)
         if utils.match_response(http_res, "404", "application/json"):
-            data = utils.unmarshal_json(http_res.text, models.APIErrorNotFoundData)
-            raise models.APIErrorNotFound(data=data)
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+            response_data = utils.unmarshal_json(
+                http_res.text, models.APIErrorNotFoundData
+            )
+            raise models.APIErrorNotFound(data=response_data)
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1096,6 +1264,7 @@ class PetSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.APIResponse]:
         r"""uploads an image
 
@@ -1105,6 +1274,7 @@ class PetSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -1120,7 +1290,7 @@ class PetSDK(BaseSDK):
             request_body=request_body,
         )
 
-        req = self.build_request(
+        req = self._build_request(
             method="POST",
             path="/pet/{petId}/uploadImage",
             base_url=base_url,
@@ -1131,6 +1301,7 @@ class PetSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.request_body,
@@ -1152,6 +1323,7 @@ class PetSDK(BaseSDK):
 
         http_res = self.do_request(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="uploadFile",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1163,7 +1335,12 @@ class PetSDK(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.APIResponse])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = utils.stream_to_text(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = utils.stream_to_text(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res
@@ -1187,6 +1364,7 @@ class PetSDK(BaseSDK):
         retries: OptionalNullable[utils.RetryConfig] = UNSET,
         server_url: Optional[str] = None,
         timeout_ms: Optional[int] = None,
+        http_headers: Optional[Mapping[str, str]] = None,
     ) -> Optional[models.APIResponse]:
         r"""uploads an image
 
@@ -1196,6 +1374,7 @@ class PetSDK(BaseSDK):
         :param retries: Override the default retry configuration for this method
         :param server_url: Override the default server URL for this method
         :param timeout_ms: Override the default request timeout configuration for this method in milliseconds
+        :param http_headers: Additional headers to set or replace on requests.
         """
         base_url = None
         url_variables = None
@@ -1211,7 +1390,7 @@ class PetSDK(BaseSDK):
             request_body=request_body,
         )
 
-        req = self.build_request_async(
+        req = self._build_request_async(
             method="POST",
             path="/pet/{petId}/uploadImage",
             base_url=base_url,
@@ -1222,6 +1401,7 @@ class PetSDK(BaseSDK):
             request_has_query_params=True,
             user_agent_header="user-agent",
             accept_header_value="application/json",
+            http_headers=http_headers,
             security=self.sdk_configuration.security,
             get_serialized_body=lambda: utils.serialize_request_body(
                 request.request_body,
@@ -1243,6 +1423,7 @@ class PetSDK(BaseSDK):
 
         http_res = await self.do_request_async(
             hook_ctx=HookContext(
+                base_url=base_url or "",
                 operation_id="uploadFile",
                 oauth2_scopes=[],
                 security_source=self.sdk_configuration.security,
@@ -1254,7 +1435,12 @@ class PetSDK(BaseSDK):
 
         if utils.match_response(http_res, "200", "application/json"):
             return utils.unmarshal_json(http_res.text, Optional[models.APIResponse])
-        if utils.match_response(http_res, ["4XX", "5XX"], "*"):
+        if utils.match_response(http_res, "4XX", "*"):
+            http_res_text = await utils.stream_to_text_async(http_res)
+            raise models.SDKError(
+                "API error occurred", http_res.status_code, http_res_text, http_res
+            )
+        if utils.match_response(http_res, "5XX", "*"):
             http_res_text = await utils.stream_to_text_async(http_res)
             raise models.SDKError(
                 "API error occurred", http_res.status_code, http_res_text, http_res

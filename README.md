@@ -44,6 +44,7 @@ For more information about the API: [Find out more about Swagger](http://swagger
   * [Authentication](#authentication)
   * [File uploads](#file-uploads)
   * [Retries](#retries)
+  * [Resource Management](#resource-management)
   * [Debugging](#debugging)
 * [Development](#development)
   * [Maturity](#maturity)
@@ -54,6 +55,15 @@ For more information about the API: [Find out more about Swagger](http://swagger
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
+> [!TIP]
+> To finish publishing your SDK to PyPI you must [run your first generation action](https://www.speakeasy.com/docs/github-setup#step-by-step-guide).
+
+
+> [!NOTE]
+> **Python version upgrade policy**
+>
+> Once a Python version reaches its [official end of life date](https://devguide.python.org/versions/), a 3-month grace period is provided for users to upgrade. Following this grace period, the minimum python version supported in the SDK will be updated.
+
 The SDK can be installed with either *pip* or *poetry* package managers.
 
 ### PIP
@@ -61,7 +71,7 @@ The SDK can be installed with either *pip* or *poetry* package managers.
 *PIP* is the default package installer for Python, enabling easy installation and management of packages from PyPI via the command line.
 
 ```bash
-pip install git+<UNSET>.git
+pip install git+https://github.com/bflad/petstore-python.git
 ```
 
 ### Poetry
@@ -69,8 +79,39 @@ pip install git+<UNSET>.git
 *Poetry* is a modern tool that simplifies dependency management and package publishing by using a single `pyproject.toml` file to handle project metadata and dependencies.
 
 ```bash
-poetry add git+<UNSET>.git
+poetry add git+https://github.com/bflad/petstore-python.git
 ```
+
+### Shell and script usage with `uv`
+
+You can use this SDK in a Python shell with [uv](https://docs.astral.sh/uv/) and the `uvx` command that comes with it like so:
+
+```shell
+uvx --from petstore python
+```
+
+It's also possible to write a standalone Python script without needing to set up a whole project like so:
+
+```python
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.9"
+# dependencies = [
+#     "petstore",
+# ]
+# ///
+
+from petstore import Petstore
+
+sdk = Petstore(
+  # SDK arguments
+)
+
+# Rest of script here...
+```
+
+Once that is saved to a file, you can run it with `uv run script.py` where
+`script.py` can be replaced with the actual file name.
 <!-- End SDK Installation [installation] -->
 
 <!-- Start IDE Support [idesupport] -->
@@ -94,8 +135,9 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as p_client:
+
+    res = p_client.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -108,9 +150,10 @@ with Petstore(
         },
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 ```
 
 </br>
@@ -124,8 +167,9 @@ from petstore import Petstore
 async def main():
     async with Petstore(
         api_key="<YOUR_API_KEY_HERE>",
-    ) as s:
-        res = await s.pet.update_pet_async(request={
+    ) as p_client:
+
+        res = await p_client.pet.update_pet_async(request={
             "name": "doggie",
             "photo_urls": [
                 "<value>",
@@ -138,9 +182,10 @@ async def main():
             },
         })
 
-        if res is not None:
-            # handle response
-            pass
+        assert res is not None
+
+        # Handle response
+        print(res)
 
 asyncio.run(main())
 ```
@@ -213,10 +258,11 @@ from petstore import Petstore, models
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
+) as p_client:
     res = None
     try:
-        res = s.pet.update_pet(request={
+
+        res = p_client.pet.update_pet(request={
             "name": "doggie",
             "photo_urls": [
                 "<value>",
@@ -229,9 +275,10 @@ with Petstore(
             },
         })
 
-        if res is not None:
-            # handle response
-            pass
+        assert res is not None
+
+        # Handle response
+        print(res)
 
     except models.APIErrorInvalidInput as e:
         # handle e.data: models.APIErrorInvalidInputData
@@ -270,8 +317,9 @@ from petstore import Petstore
 with Petstore(
     server_idx=1,
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as p_client:
+
+    res = p_client.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -284,9 +332,10 @@ with Petstore(
         },
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -299,8 +348,9 @@ from petstore import Petstore
 with Petstore(
     server_url="http://localhost:18080",
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as p_client:
+
+    res = p_client.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -313,9 +363,10 @@ with Petstore(
         },
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 <!-- End Server Selection [server] -->
@@ -418,8 +469,9 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as p_client:
+
+    res = p_client.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -432,9 +484,10 @@ with Petstore(
         },
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 <!-- End Authentication [security] -->
@@ -454,12 +507,14 @@ from petstore import Petstore
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.upload_file(pet_id=565380)
+) as p_client:
 
-    if res is not None:
-        # handle response
-        pass
+    res = p_client.pet.upload_file(pet_id=565380)
+
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 <!-- End File uploads [file-upload] -->
@@ -476,8 +531,9 @@ from petstore.utils import BackoffStrategy, RetryConfig
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as p_client:
+
+    res = p_client.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -491,9 +547,10 @@ with Petstore(
     },
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -505,8 +562,9 @@ from petstore.utils import BackoffStrategy, RetryConfig
 with Petstore(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
+) as p_client:
+
+    res = p_client.pet.update_pet(request={
         "name": "doggie",
         "photo_urls": [
             "<value>",
@@ -519,12 +577,38 @@ with Petstore(
         },
     })
 
-    if res is not None:
-        # handle response
-        pass
+    assert res is not None
+
+    # Handle response
+    print(res)
 
 ```
 <!-- End Retries [retries] -->
+
+<!-- Start Resource Management [resource-management] -->
+## Resource Management
+
+The `Petstore` class implements the context manager protocol and registers a finalizer function to close the underlying sync and async HTTPX clients it uses under the hood. This will close HTTP connections, release memory and free up other resources held by the SDK. In short-lived Python programs and notebooks that make a few SDK method calls, resource management may not be a concern. However, in longer-lived programs, it is beneficial to create a single SDK instance via a [context manager][context-manager] and reuse it across the application.
+
+[context-manager]: https://docs.python.org/3/reference/datamodel.html#context-managers
+
+```python
+from petstore import Petstore
+def main():
+    with Petstore(
+        api_key="<YOUR_API_KEY_HERE>",
+    ) as p_client:
+        # Rest of application here...
+
+
+# Or when using async:
+async def amain():
+    async with Petstore(
+        api_key="<YOUR_API_KEY_HERE>",
+    ) as p_client:
+        # Rest of application here...
+```
+<!-- End Resource Management [resource-management] -->
 
 <!-- Start Debugging [debug] -->
 ## Debugging

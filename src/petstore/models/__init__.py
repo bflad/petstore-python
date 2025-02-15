@@ -32,6 +32,7 @@ from .updateuserop import UpdateUserRequest, UpdateUserRequestTypedDict
 from .uploadfileop import UploadFileRequest, UploadFileRequestTypedDict
 from .user import User, UserTypedDict
 
+
 __all__ = [
     "APIErrorInvalidInput",
     "APIErrorInvalidInputData",
