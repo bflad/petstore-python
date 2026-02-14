@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 from enum import Enum
-from petstore.types import BaseModel
+from petstore.types import BaseModel, UNSET_SENTINEL
 from petstore.utils import FieldMetadata, QueryParamMetadata
+from pydantic import model_serializer
 from typing import Optional
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -27,3 +28,19 @@ class FindPetsByStatusRequest(BaseModel):
         FieldMetadata(query=QueryParamMetadata(style="form", explode=True)),
     ] = QueryParamStatus.AVAILABLE
     r"""Status values that need to be considered for filter"""
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["status"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

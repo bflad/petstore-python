@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 import io
-from petstore.types import BaseModel
+from petstore.types import BaseModel, UNSET_SENTINEL
 from petstore.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
 import pydantic
+from pydantic import model_serializer
 from typing import IO, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -36,3 +37,19 @@ class UploadFileRequest(BaseModel):
         Optional[Union[bytes, IO[bytes], io.BufferedReader]],
         FieldMetadata(request=True),
     ] = None
+
+    @model_serializer(mode="wrap")
+    def serialize_model(self, handler):
+        optional_fields = set(["additionalMetadata", "RequestBody"])
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias or n
+            val = serialized.get(k)
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m

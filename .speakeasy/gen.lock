@@ -3,29 +3,625 @@ id: 49e4134f-8a68-4822-9090-ea41d8f239dc
 management:
   docChecksum: 12f3c702a2ae2b49d11fc62baec64aa2
   docVersion: 1.0.0
-  speakeasyVersion: 1.452.0
-  generationVersion: 2.472.1
-  releaseVersion: 0.4.1
-  configChecksum: 353c65475fad736701b0e7106a74c8d6
+  speakeasyVersion: 1.716.0
+  generationVersion: 2.823.1
+  releaseVersion: 0.5.0
+  configChecksum: df5a59ac740bbff98e8c3d7c219ed027
+  repoURL: https://github.com/bflad/petstore-python.git
+  installationURL: https://github.com/bflad/petstore-python.git
+persistentEdits:
+  generation_id: ef7504de-2611-426d-9276-41e50a3f6fff
+  pristine_commit_hash: 2f4e71a2e6824eade29cb39e8176a43c69330015
+  pristine_tree_hash: 360024a304293c5f36001573fd48f7bda70612b4
 features:
   python:
     additionalDependencies: 1.0.0
-    constsAndDefaults: 1.0.5
-    core: 5.6.9
+    constsAndDefaults: 1.0.6
+    core: 6.0.5
     defaultEnabledRetries: 0.2.0
     devContainers: 3.0.0
     enumUnions: 0.1.0
     envVarSecurityUsage: 0.3.2
-    flattening: 3.1.0
-    globalSecurity: 3.0.2
+    flattening: 3.1.1
+    globalSecurity: 3.0.5
     globalSecurityCallbacks: 1.0.0
     globalSecurityFlattening: 1.0.0
-    globalServerURLs: 3.0.0
+    globalServerURLs: 3.2.0
     methodArguments: 1.0.2
-    responseFormat: 1.0.1
-    retries: 3.0.2
-    sdkHooks: 1.0.0
+    responseFormat: 1.1.0
+    retries: 3.0.3
+    sdkHooks: 1.2.1
     uploadStreams: 1.0.0
+trackedFiles:
+  .devcontainer/README.md:
+    id: b170c0f184ac
+    last_write_checksum: sha1:fa1bef71f877f53112c65cc43c8f773d4e9b0270
+    pristine_git_object: e4cd1a80dbf1988e684000f8fc691237d22a8784
+  .devcontainer/devcontainer.json:
+    id: b34062a34eb1
+    last_write_checksum: sha1:fbbce5654b8990b172a9ffe841d7635cd51c495b
+    pristine_git_object: 7e67af9f5b5aeed56bab8dd84f75d3729df3ada1
+  .devcontainer/setup.sh:
+    id: 5f1dfbfeb8eb
+    last_write_checksum: sha1:186b8676fff61571a87840f5e19860b8934e65e3
+    pristine_git_object: 6912c04049a2632a9e9b31d3dd91967f446adbfa
+  .gitattributes:
+    id: 24139dae6567
+    last_write_checksum: sha1:53134de3ada576f37c22276901e1b5b6d85cd2da
+    pristine_git_object: 4d75d59008e4d8609876d263419a9dc56c8d6f3a
+  .vscode/settings.json:
+    id: 89aa447020cd
+    last_write_checksum: sha1:f84632c81029fcdda8c3b0c768d02b836fc80526
+    pristine_git_object: 8d79f0abb72526f1fb34a4c03e5bba612c6ba2ae
+  USAGE.md:
+    id: 3aed33ce6e6f
+    last_write_checksum: sha1:f6e5deca36457f54cf8adab9ae58acc9d89416c5
+    pristine_git_object: 1439978857957024ac1c5d055a9deb9bbbbd0adc
+  docs/models/apierrorinvalidinput.md:
+    id: "633043903378"
+    last_write_checksum: sha1:6a8dac147ad60e28d45ed9cb0e2ed5dba86c02a8
+    pristine_git_object: ab88c5df8d3e45ebd06a51d703dac6714cc7df28
+  docs/models/apierrornotfound.md:
+    id: a48c9a5e5619
+    last_write_checksum: sha1:a6ccb439129626e61691418896fb09d079150a09
+    pristine_git_object: fe70db7afe54f97d00f4ef4dd048b6d6f9f06fba
+  docs/models/apierrorunauthorized.md:
+    id: 64fd72f566e8
+    last_write_checksum: sha1:b82d88a8f0ecbe521da4379d64510d8918b8d5f9
+    pristine_git_object: 1f42211f83b0c0d3efbb749fe459e2e738724c26
+  docs/models/apiresponse.md:
+    id: 200a62e813b5
+    last_write_checksum: sha1:bc22b175bd5fe1048bfed875b4d9e29c78edafb9
+    pristine_git_object: 5af5eed34c50fce15ab9fad4e6ba2d8d319d21aa
+  docs/models/category.md:
+    id: 61e7fe02a3f6
+    last_write_checksum: sha1:bf2e8de1685a50635825c73cf3ab9b1b5c098e72
+    pristine_git_object: 8d43ea571ac118cd61dc7508d6fa3e9e35ced9c3
+  docs/models/deleteorderrequest.md:
+    id: 7fbb4d9727f9
+    last_write_checksum: sha1:00921e6b2a276793eb0136b002d6a40342aa1331
+    pristine_git_object: 025b796d6b797bacedeb75dd5a4adc9508af1e9c
+  docs/models/deletepetrequest.md:
+    id: 83f061070946
+    last_write_checksum: sha1:687d590afefec167e5572abcc822f9f75b1a38de
+    pristine_git_object: 34e51d0133ca183f9b7863ffad4149ecb1144784
+  docs/models/deleteuserrequest.md:
+    id: 36548eaea998
+    last_write_checksum: sha1:9b38a7f5ee3cd0600a5e0dddb4af735f72d8800d
+    pristine_git_object: 06649cf26a2ffbd0d81b858ab031d3797a5e9644
+  docs/models/findpetsbystatusrequest.md:
+    id: c6ad2afc4d3e
+    last_write_checksum: sha1:5de691ba9e2accaad8c39e11b2e248ffbb97abc7
+    pristine_git_object: d1f41e27f2121654c8a2f481dcf47e881ae53a4f
+  docs/models/findpetsbytagsrequest.md:
+    id: b89fdc443e1b
+    last_write_checksum: sha1:0c6e9185cd6622fec7a6711381255c895963dd6d
+    pristine_git_object: d9c526243d1216f17d4cd22b6863366fb470caae
+  docs/models/getorderbyidrequest.md:
+    id: a177019d2596
+    last_write_checksum: sha1:babe5951a06b7f79699c93d7d3b54bc1fbf262a0
+    pristine_git_object: 0351934a51d207674baa9b0c8222f70c7e387099
+  docs/models/getpetbyidrequest.md:
+    id: 551a3acb65fd
+    last_write_checksum: sha1:67725da2c2e7ffe9cee38d2fb8e45856d140558d
+    pristine_git_object: cb86358117ab91c5fb3e43a35afd4d655d2a62b6
+  docs/models/getuserbynamerequest.md:
+    id: 2326db577997
+    last_write_checksum: sha1:b887e45e79ef945cc93347175e77eaa0412c7fdc
+    pristine_git_object: d70877011ff0992a70e0eb8df19adad4ab668c86
+  docs/models/loginuserrequest.md:
+    id: e09e6c488fb9
+    last_write_checksum: sha1:91e9f588a40b0744b58b7da46bafe3a2df0a9cdc
+    pristine_git_object: a8ca9eaea9b511edcc350922ade2861cb05a8a02
+  docs/models/loginuserresponse.md:
+    id: 660b88490c67
+    last_write_checksum: sha1:ce694cea0e415643a19920e4be00947e5bef7ee0
+    pristine_git_object: 39cde6dcfa158f4c0b611e7d5d0f62b448e4ec6e
+  docs/models/order.md:
+    id: 5d2682daf79b
+    last_write_checksum: sha1:40b23aa54500d1c1a06ed7d70aac7d41a8957c32
+    pristine_git_object: 99a724a05c3f44371d51497e878ffe4c373d7528
+  docs/models/orderstatus.md:
+    id: 713fa0fe3280
+    last_write_checksum: sha1:37f4a7c1f572435e4f86a08c3a215d2b636d0c1a
+    pristine_git_object: f9c64fcf0980d0ee3f2d1a781823a7e44e161176
+  docs/models/pet.md:
+    id: e267a20ce961
+    last_write_checksum: sha1:e8c9951c5636ea63b1033f0b70eab3f3cae13d76
+    pristine_git_object: 03936e4a2c176c4b193d6de60df5f73c16589ccc
+  docs/models/queryparamstatus.md:
+    id: 15628120923d
+    last_write_checksum: sha1:8d694dcd4d8dbdec8966e746cd02c6bea615fbe1
+    pristine_git_object: 3c29a238428a76518aa6cc2add7479e9b5b09bc1
+  docs/models/security.md:
+    id: 452e4d4eb67a
+    last_write_checksum: sha1:ce2871b49c1632d50e22d0b1ebe4999021d52313
+    pristine_git_object: c698674c513f5b20c04f629e50154e67977275f7
+  docs/models/status.md:
+    id: 959cd204aadf
+    last_write_checksum: sha1:1dc36c3b4d46ca15a8322f36585ac0dfe849d6b8
+    pristine_git_object: 0448b5ea540e7d897b4b5327497892195fb56d19
+  docs/models/tag.md:
+    id: 90f069a60928
+    last_write_checksum: sha1:b48d925228af18527dc59b273f6937162aa61362
+    pristine_git_object: 22ba9c3464329c92da39b57818b3733d8ea4c944
+  docs/models/updateuserrequest.md:
+    id: 4630cfae46e2
+    last_write_checksum: sha1:76abf779af35485ec2fd87ca933157ab2699be48
+    pristine_git_object: cc180dd899c54aceb19e3a3e19e56201036dd6aa
+  docs/models/uploadfilerequest.md:
+    id: 57e3b1c37a62
+    last_write_checksum: sha1:a8113fa55fdf4fdb27ebc2de07925c1e07e9ff42
+    pristine_git_object: c603e98565f618d7a23c5c56709559fe8ca7e33f
+  docs/models/user.md:
+    id: 8306f1e41187
+    last_write_checksum: sha1:83bd63936a7ac98e7b45b03936908fadc76bf99f
+    pristine_git_object: b4c76ba9ba9a0afcdd40796595639ad2c8dcccef
+  docs/models/utils/retryconfig.md:
+    id: 4343ac43161c
+    last_write_checksum: sha1:562c0f21e308ad10c27f85f75704c15592c6929d
+    pristine_git_object: 69dd549ec7f5f885101d08dd502e25748183aebf
+  docs/sdks/petsdk/README.md:
+    id: 39f8453f102d
+    last_write_checksum: sha1:df0770be480d0399c00a813e4a1d90b5fc332787
+    pristine_git_object: 41c6f4ef16abae36f7ef1dafbc71d84b17e10253
+  docs/sdks/store/README.md:
+    id: c7c274b48df2
+    last_write_checksum: sha1:76ff8474193c314260e31ce425e60e6dfc8b8469
+    pristine_git_object: f2c41af15641436476936bd323db1c2ab68d6da7
+  docs/sdks/usersdk/README.md:
+    id: c3248811dcdc
+    last_write_checksum: sha1:7440f5a5028823d26094c1ebb20e1616e9c37113
+    pristine_git_object: 1c7735889ba9c6a711781193951fb619e12c0007
+  poetry.toml:
+    id: a81ade82122a
+    last_write_checksum: sha1:2242305e29dc6921bdf5b200aea5d4bf67830230
+    pristine_git_object: cd3492ac9dc870fdcf23dbd94fd1d40cc753cc8e
+  py.typed:
+    id: 258c3ed47ae4
+    last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
+    pristine_git_object: 3e38f1a929f7d6b1d6de74604aa87e3d8f010544
+  pylintrc:
+    id: 7ce8b9f946e6
+    last_write_checksum: sha1:0e10638ea7d22a917f716f609a4c05ca0cd18e91
+    pristine_git_object: ba6a998b82e6e5fce3f37f2c3a73b345395d952c
+  pyproject.toml:
+    id: 5d07e7d72637
+    last_write_checksum: sha1:19bc72a949317271757400f797eb8b053d1b4a04
+    pristine_git_object: a49b86a7653c67cd77f6ce807d7b33ccf51046f3
+  scripts/prepare_readme.py:
+    id: e0c5957a6035
+    last_write_checksum: sha1:6f6eccb6a848e38d2e8c3d06752e3ba68e07d601
+    pristine_git_object: 289787185921e2b9e4c5145b1b91d01eb9ebbe89
+  scripts/publish.sh:
+    id: fe273b08f514
+    last_write_checksum: sha1:b31bafc19c15ab5ea925fdf8d5d4adce2b115a63
+    pristine_git_object: 2a3ead70ccc6228cbae1c5c8a319b1399f3804ea
+  src/petstore/__init__.py:
+    id: 9bbaacd2d64a
+    last_write_checksum: sha1:36306d1d404b6aeb912d27f1d9c52f098ff7bf9b
+    pristine_git_object: dd02e42e4cc509dc90e6ae70493054021faa5f9c
+  src/petstore/_hooks/__init__.py:
+    id: 70ac904ddd95
+    last_write_checksum: sha1:e3111289afd28ad557c21d9e2f918caabfb7037d
+    pristine_git_object: 2ee66cdd592fe41731c24ddd407c8ca31c50aec1
+  src/petstore/_hooks/sdkhooks.py:
+    id: e488bce6e496
+    last_write_checksum: sha1:c466400ab09b1bfd960d4125cb12687df578a05e
+    pristine_git_object: 5d3d917b38b362fd6ce2e86ad4af3d95bff953f3
+  src/petstore/_hooks/types.py:
+    id: d8e1153dd8f1
+    last_write_checksum: sha1:9c5c24af9f0c16c68ff4ad92f962f4ee8bb8392b
+    pristine_git_object: c2ee7ea6ec1841dd5e0b3896a15fc4261e85d2fd
+  src/petstore/_version.py:
+    id: fe1ff2554367
+    last_write_checksum: sha1:3e4081f89b9b1befce2e2d5c5ce38414df664dd2
+    pristine_git_object: 99d11f6efd59d09c8576bc75920d98173e31a9bc
+  src/petstore/basesdk.py:
+    id: 6e76fd6ce5d7
+    last_write_checksum: sha1:84e2b0d761ff425fdc54078c050158e3625a2a74
+    pristine_git_object: 8e03175e967df2d1f67bd254f078223f5be339b1
+  src/petstore/httpclient.py:
+    id: 4d4db05e3fa8
+    last_write_checksum: sha1:5e55338d6ee9f01ab648cad4380201a8a3da7dd7
+    pristine_git_object: 89560b566073785535643e694c112bedbd3db13d
+  src/petstore/models/__init__.py:
+    id: 69f64505099c
+    last_write_checksum: sha1:30f18bb46001553a4284c3a29494afa6ce016390
+    pristine_git_object: 8679b3ea8808f7fcb437e66d62897af4e0c86e97
+  src/petstore/models/apierrorinvalidinput.py:
+    id: b864398c6042
+    last_write_checksum: sha1:379951e8f825204d843bcbb49d3511d263c4dcd9
+    pristine_git_object: 667aebb258ed49ee62d9ea215c51be83b499c1bd
+  src/petstore/models/apierrornotfound.py:
+    id: ac00d3ea1b04
+    last_write_checksum: sha1:ca97350376fd0bf067f9f8da86a380c22bb1bc25
+    pristine_git_object: 4c1df80454936bfcaf22ceb643f570b7ed238aa9
+  src/petstore/models/apierrorunauthorized.py:
+    id: 3b33c662b0fb
+    last_write_checksum: sha1:626e3830d849b71890e27ca7497f4d10ca8e1d61
+    pristine_git_object: 5a963405569f1bdb86340d746547b9d8f257975a
+  src/petstore/models/apiresponse.py:
+    id: 0faf84876c82
+    last_write_checksum: sha1:e038b69c026ae01001a9c3edb62cdd41811c8d67
+    pristine_git_object: fe3cfe40d024f828ed8b1fdb2e78b98dc5b02709
+  src/petstore/models/category.py:
+    id: 89f47d78da25
+    last_write_checksum: sha1:552b0d212480c6b0bf1046bf0eb78694c1b2e917
+    pristine_git_object: 595e95c3642a824c0530e160ddba14bfbb2f7d38
+  src/petstore/models/deleteorderop.py:
+    id: be730c8e8066
+    last_write_checksum: sha1:057eccc97b4c6d50597b0db443946a6c4b2fd608
+    pristine_git_object: cadf423f97d2ff2b5d9414efd220479952af1c05
+  src/petstore/models/deletepetop.py:
+    id: da920d34e21e
+    last_write_checksum: sha1:e2e65c8bdab344ba2b793a96f6c57188240fcdcc
+    pristine_git_object: db28067b7c434ebb1a6bf58c6e18e92d08686c5c
+  src/petstore/models/deleteuserop.py:
+    id: 0ac7aa0e1c96
+    last_write_checksum: sha1:e898c8b8c2dd0b74a19307ca7050a0eee171a8c3
+    pristine_git_object: 5da974442e440348b0614589b4be31a2b9d6b7bd
+  src/petstore/models/findpetsbystatusop.py:
+    id: f4239d372d88
+    last_write_checksum: sha1:a65c4e88f8e18cf1f599227916def3e6673885f2
+    pristine_git_object: e26425d5ffae88be5d48b310e1c43a057321e895
+  src/petstore/models/findpetsbytagsop.py:
+    id: 37924323952e
+    last_write_checksum: sha1:16d2963428c058f346508b1a7813835f5d363719
+    pristine_git_object: 1f50b629d65fed09f3eb68f9c483a9ba81b25abd
+  src/petstore/models/getorderbyidop.py:
+    id: 533c5c07811a
+    last_write_checksum: sha1:8a4d5581cc298a9a2d4e7ec7fbc04173bb2430df
+    pristine_git_object: c34673fc97600e303d03fc6afcf3a13bcbf65bef
+  src/petstore/models/getpetbyidop.py:
+    id: fe95583c52d5
+    last_write_checksum: sha1:e3f28e4dce87b099b67d3467d431d24e497f13aa
+    pristine_git_object: 1f8bb71ab501b5aa84c0dd9c48aa617800cba7b5
+  src/petstore/models/getuserbynameop.py:
+    id: f0a0048ac123
+    last_write_checksum: sha1:69cb6d0c60e4810d3e8295d4ad4d1ec492395323
+    pristine_git_object: 7f643024ec3021c6ad25dcc99d281105458bfe59
+  src/petstore/models/loginuserop.py:
+    id: 36d5569e8732
+    last_write_checksum: sha1:6adbe7cabf452b77eaa4e4f4c82989238e3cc456
+    pristine_git_object: e24f9a27fda24d216b1b1edef5d12d5dd44de645
+  src/petstore/models/no_response_error.py:
+    id: fc084a07a749
+    last_write_checksum: sha1:7f326424a7d5ae1bcd5c89a0d6b3dbda9138942f
+    pristine_git_object: 1deab64bc43e1e65bf3c412d326a4032ce342366
+  src/petstore/models/order.py:
+    id: a3d8c5248803
+    last_write_checksum: sha1:3435f7eab4ffbd683b1f2afc34bc94eccca0b129
+    pristine_git_object: 8ae77b07cd2c8c039be5ffaa67f7ada40e7b40ce
+  src/petstore/models/pet.py:
+    id: f99ca3a02c8c
+    last_write_checksum: sha1:42893dca91d194fb2be938e173d07688026eb098
+    pristine_git_object: 29bbf8aa4ded74c565e94956367137833ab996d0
+  src/petstore/models/petstoreerror.py:
+    id: c88862e2f328
+    last_write_checksum: sha1:44bad1f70a334881d29280ae51aebb7ed9b7ee61
+    pristine_git_object: 1f9f2ccdaa2be73936c1358cfda8f9ac257278ef
+  src/petstore/models/responsevalidationerror.py:
+    id: e1ad491ac36f
+    last_write_checksum: sha1:bc9c15a192dcb3e7763840e058d5cd43edd544c3
+    pristine_git_object: 6096629c08d0479980c397acf3a12c167e252bb0
+  src/petstore/models/sdkerror.py:
+    id: df1ac5b3ab8c
+    last_write_checksum: sha1:8464eaf8a73b390494844084a3d6bea01f75cc9b
+    pristine_git_object: 5c5c8d62a3d386153ad3933bec4ca6fb44895bee
+  src/petstore/models/security.py:
+    id: f9cfd336e921
+    last_write_checksum: sha1:76d297741fdf6486586d277c6fab62f0c6480e26
+    pristine_git_object: a4d853aef017782c355057ccc3b4829267001469
+  src/petstore/models/tag.py:
+    id: beddef207f48
+    last_write_checksum: sha1:438e6b5b5947f62880405376e4dc040fae3431aa
+    pristine_git_object: e03328f5b688a7d45b11dba63c4cfb9a128b90fc
+  src/petstore/models/updateuserop.py:
+    id: 368a4829b8ce
+    last_write_checksum: sha1:7bd947bb73beb3fdd0d1c197c493ccaecd25cc5c
+    pristine_git_object: f7f022a1074cf63c7352dfe0259bd3a849a1e58b
+  src/petstore/models/uploadfileop.py:
+    id: 8b1f15854531
+    last_write_checksum: sha1:e69aa64dd37d963e7ddbb2c09ff403e3bdf667b8
+    pristine_git_object: 4d9d497f6272718126ee50dbc3fcd4657101fc99
+  src/petstore/models/user.py:
+    id: aeb464df88cd
+    last_write_checksum: sha1:a323e7ef38a4928ad5dc5cc24c405b4167cf6553
+    pristine_git_object: 6c780f59d3d6c81cec28baf8835a57badadb34d4
+  src/petstore/pet_sdk.py:
+    id: e851aac1dc8b
+    last_write_checksum: sha1:a69ef2243e00d7a2b74ccf07cad06a5bff49cb90
+    pristine_git_object: ce65dfdd36682ee654fa95099f492b944f3207a2
+  src/petstore/py.typed:
+    id: 86306e840321
+    last_write_checksum: sha1:8efc425ffe830805ffcc0f3055871bdcdc542c60
+    pristine_git_object: 3e38f1a929f7d6b1d6de74604aa87e3d8f010544
+  src/petstore/sdk.py:
+    id: ab19c1680812
+    last_write_checksum: sha1:4d20ed20c116b2314990d6c104b238346983969f
+    pristine_git_object: f436cbb45df2f7dfaff9210530a624d314bc8c01
+  src/petstore/sdkconfiguration.py:
+    id: 1acd9eb20709
+    last_write_checksum: sha1:bdf09d37e485475fff047a19a2c46916e223e526
+    pristine_git_object: 2d4f67881f4c92e9f1726546bcd855d4e68b503f
+  src/petstore/store.py:
+    id: 6832cc3b7d6c
+    last_write_checksum: sha1:cfb0315925ce625d6b72961a12de90603aa14176
+    pristine_git_object: 0c6db8a5d85a88eb616114998620aa13d1d7cc28
+  src/petstore/types/__init__.py:
+    id: 1fc0cd1a37f9
+    last_write_checksum: sha1:140ebdd01a46f92ffc710c52c958c4eba3cf68ed
+    pristine_git_object: fc76fe0c5505e29859b5d2bb707d48fd27661b8c
+  src/petstore/types/basemodel.py:
+    id: 00733e9e52bb
+    last_write_checksum: sha1:10d84aedeb9d35edfdadf2c3020caa1d24d8b584
+    pristine_git_object: a9a640a1a7048736383f96c67c6290c86bf536ee
+  src/petstore/user_sdk.py:
+    id: 4b691d2450ca
+    last_write_checksum: sha1:253befe52c37ae78ba3ce37b0c535c22b9868b14
+    pristine_git_object: c7407b385dbb121b3652d438ffc64737e910cab1
+  src/petstore/utils/__init__.py:
+    id: 7749741fe628
+    last_write_checksum: sha1:a1f6ae620fb6a3ccc30e99b427e49a0c8be463af
+    pristine_git_object: 15394a08a7e30033d319e44dd5734664ddb587e5
+  src/petstore/utils/annotations.py:
+    id: f218502ff219
+    last_write_checksum: sha1:a4824ad65f730303e4e1e3ec1febf87b4eb46dbc
+    pristine_git_object: 12e0aa4f1151bb52474cc02e88397329b90703f6
+  src/petstore/utils/datetimes.py:
+    id: a6d367daf87c
+    last_write_checksum: sha1:c721e4123000e7dc61ec52b28a739439d9e17341
+    pristine_git_object: a6c52cd61bbe2d459046c940ce5e8c469f2f0664
+  src/petstore/utils/enums.py:
+    id: c65f5c0cecc4
+    last_write_checksum: sha1:bc8c3c1285ae09ba8a094ee5c3d9c7f41fa1284d
+    pristine_git_object: 3324e1bc2668c54c4d5f5a1a845675319757a828
+  src/petstore/utils/eventstreaming.py:
+    id: 24fe2c55686d
+    last_write_checksum: sha1:ffa870a25a7e4e2015bfd7a467ccd3aa1de97f0e
+    pristine_git_object: f2052fc22d9fd6c663ba3dce019fe234ca37108b
+  src/petstore/utils/forms.py:
+    id: 10acebc0d907
+    last_write_checksum: sha1:15fa7e9ab1611e062a9984cf06cb20969713d295
+    pristine_git_object: f961e76beaf0a8b1fe0dda44754a74eebd3608e7
+  src/petstore/utils/headers.py:
+    id: 9de615c5a30f
+    last_write_checksum: sha1:7c6df233ee006332b566a8afa9ce9a245941d935
+    pristine_git_object: 37864cbbbc40d1a47112bbfdd3ba79568fc8818a
+  src/petstore/utils/logger.py:
+    id: ede6d61a3887
+    last_write_checksum: sha1:f3fdb154a3f09b8cc43d74c7e9c02f899f8086e4
+    pristine_git_object: b661aff65d38b77d035149699aea09b2785d2fc6
+  src/petstore/utils/metadata.py:
+    id: 21633e3e7baf
+    last_write_checksum: sha1:c6a560bd0c63ab158582f34dadb69433ea73b3d4
+    pristine_git_object: 173b3e5ce658675c2f504222a56b3daaaa68107d
+  src/petstore/utils/queryparams.py:
+    id: 3b028c2b84a5
+    last_write_checksum: sha1:b94c3f314fd3da0d1d215afc2731f48748e2aa59
+    pristine_git_object: c04e0db82b68eca041f2cb2614d748fbac80fd41
+  src/petstore/utils/requestbodies.py:
+    id: e0edf16e0790
+    last_write_checksum: sha1:41e2d2d2d3ecc394c8122ca4d4b85e1c3e03f054
+    pristine_git_object: 1de32b6d26f46590232f398fdba6ce0072f1659c
+  src/petstore/utils/retries.py:
+    id: ec49f8c3d273
+    last_write_checksum: sha1:5b97ac4f59357d70c2529975d50364c88bcad607
+    pristine_git_object: 88a91b10cd2076b4a2c6cff2ac6bfaa5e3c5ad13
+  src/petstore/utils/security.py:
+    id: 07816d2c37ec
+    last_write_checksum: sha1:435dd8b180cefcd733e635b9fa45512da091d9c0
+    pristine_git_object: 17996bd54b8624009802fbbdf30bcb4225b8dfed
+  src/petstore/utils/serializers.py:
+    id: 9ec1177f22e1
+    last_write_checksum: sha1:ce1d8d7f500a9ccba0aeca5057cee9c271f4dfd7
+    pristine_git_object: 14321eb479de81d0d9580ec8291e0ff91bf29e57
+  src/petstore/utils/unmarshal_json_response.py:
+    id: 58af6d30b5b9
+    last_write_checksum: sha1:da09c0535ece258781b0103d2cf79222c1c1314f
+    pristine_git_object: a505d5e064ff82b8588bb3bd114ab757a97d9f78
+  src/petstore/utils/url.py:
+    id: bdd039acc63b
+    last_write_checksum: sha1:6479961baa90432ca25626f8e40a7bbc32e73b41
+    pristine_git_object: c78ccbae426ce6d385709d97ce0b1c2813ea2418
+  src/petstore/utils/values.py:
+    id: 35c40b719e93
+    last_write_checksum: sha1:acaa178a7c41ddd000f58cc691e4632d925b2553
+    pristine_git_object: dae01a44384ac3bc13ae07453a053bf6c898ebe3
+examples:
+  updatePet:
+    speakeasy-default-update-pet:
+      requestBody:
+        application/json: {"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": ["<value 1>"]}
+      responses:
+        "200":
+          application/json: {"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": []}
+        "400":
+          application/json: {"status": 400, "error": "Bad request"}
+        "401":
+          application/json: {"status": 401, "error": "Unauthorized"}
+        "404":
+          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
+  addPet:
+    speakeasy-default-add-pet:
+      requestBody:
+        application/json: {"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": ["<value 1>", "<value 2>", "<value 3>"]}
+      responses:
+        "200":
+          application/json: {"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": ["<value 1>"]}
+  findPetsByStatus:
+    speakeasy-default-find-pets-by-status:
+      parameters:
+        query:
+          status: "available"
+      responses:
+        "200":
+          application/json: [{"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": ["<value 1>", "<value 2>"]}]
+        "400":
+          application/json: {"status": 400, "error": "Bad request"}
+        "401":
+          application/json: {"status": 401, "error": "Unauthorized"}
+        "404":
+          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
+  findPetsByTags:
+    speakeasy-default-find-pets-by-tags:
+      responses:
+        "200":
+          application/json: [{"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": []}]
+        "400":
+          application/json: {"status": 400, "error": "Bad request"}
+        "401":
+          application/json: {"status": 401, "error": "Unauthorized"}
+        "404":
+          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
+  getPetById:
+    speakeasy-default-get-pet-by-id:
+      parameters:
+        path:
+          petId: 311674
+      responses:
+        "200":
+          application/json: {"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": ["<value 1>"]}
+        "400":
+          application/json: {"status": 400, "error": "Bad request"}
+        "401":
+          application/json: {"status": 401, "error": "Unauthorized"}
+        "404":
+          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
+  deletePet:
+    speakeasy-default-delete-pet:
+      parameters:
+        path:
+          petId: 818965
+      responses:
+        "200":
+          application/json: {"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": []}
+        "400":
+          application/json: {"status": 400, "error": "Bad request"}
+        "401":
+          application/json: {"status": 401, "error": "Unauthorized"}
+        "404":
+          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
+  uploadFile:
+    speakeasy-default-upload-file:
+      parameters:
+        path:
+          petId: 150516
+      responses:
+        "200":
+          application/json: {}
+  getInventory:
+    speakeasy-default-get-inventory:
+      responses:
+        "200":
+          application/json: {"key": 111959, "key1": 333452, "key2": 973245}
+        "401":
+          application/json: {"status": 401, "error": "Unauthorized"}
+        "404":
+          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
+  placeOrder:
+    speakeasy-default-place-order:
+      requestBody:
+        application/json: {"id": 10, "petId": 198772, "quantity": 7, "status": "approved"}
+      responses:
+        "200":
+          application/json: {"id": 10, "petId": 198772, "quantity": 7, "status": "approved"}
+        "401":
+          application/json: {"status": 401, "error": "Unauthorized"}
+        "404":
+          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
+  getOrderById:
+    speakeasy-default-get-order-by-id:
+      parameters:
+        path:
+          orderId: 728529
+      responses:
+        "200":
+          application/json: {"id": 10, "petId": 198772, "quantity": 7, "status": "approved"}
+        "400":
+          application/json: {"status": 400, "error": "Bad request"}
+        "401":
+          application/json: {"status": 401, "error": "Unauthorized"}
+        "404":
+          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
+  deleteOrder:
+    speakeasy-default-delete-order:
+      parameters:
+        path:
+          orderId: 690575
+      responses:
+        "200":
+          application/json: {"id": 10, "petId": 198772, "quantity": 7, "status": "approved"}
+        "400":
+          application/json: {"status": 400, "error": "Bad request"}
+        "401":
+          application/json: {"status": 401, "error": "Unauthorized"}
+        "404":
+          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
+  createUser:
+    speakeasy-default-create-user:
+      requestBody:
+        application/json: {"id": 10, "username": "theUser", "firstName": "John", "lastName": "James", "email": "john@email.com", "password": "12345", "phone": "12345", "userStatus": 1}
+      responses:
+        "200":
+          application/json: {"id": 10, "username": "theUser", "firstName": "John", "lastName": "James", "email": "john@email.com", "password": "12345", "phone": "12345", "userStatus": 1}
+  createUsersWithListInput:
+    speakeasy-default-create-users-with-list-input:
+      requestBody:
+        application/json: [{"id": 10, "username": "theUser", "firstName": "John", "lastName": "James", "email": "john@email.com", "password": "12345", "phone": "12345", "userStatus": 1}]
+      responses:
+        "200":
+          application/json: {"id": 10, "username": "theUser", "firstName": "John", "lastName": "James", "email": "john@email.com", "password": "12345", "phone": "12345", "userStatus": 1}
+  loginUser:
+    speakeasy-default-login-user:
+      responses:
+        "200":
+          application/json: "<value>"
+        "400":
+          application/json: {"status": 400, "error": "Bad request"}
+        "401":
+          application/json: {"status": 401, "error": "Unauthorized"}
+        "404":
+          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
+  logoutUser: {}
+  getUserByName:
+    speakeasy-default-get-user-by-name:
+      parameters:
+        path:
+          username: "Edyth10"
+      responses:
+        "200":
+          application/json: {"id": 10, "username": "theUser", "firstName": "John", "lastName": "James", "email": "john@email.com", "password": "12345", "phone": "12345", "userStatus": 1}
+        "400":
+          application/json: {"status": 400, "error": "Bad request"}
+        "401":
+          application/json: {"status": 401, "error": "Unauthorized"}
+        "404":
+          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
+  updateUser:
+    speakeasy-default-update-user:
+      parameters:
+        path:
+          username: "Alison.Cassin"
+      requestBody:
+        application/json: {"id": 10, "username": "theUser", "firstName": "John", "lastName": "James", "email": "john@email.com", "password": "12345", "phone": "12345", "userStatus": 1}
+  deleteUser:
+    speakeasy-default-delete-user:
+      parameters:
+        path:
+          username: "Rita_Schuppe"
+      responses:
+        "200":
+          application/json: {"id": 10, "username": "theUser", "firstName": "John", "lastName": "James", "email": "john@email.com", "password": "12345", "phone": "12345", "userStatus": 1}
+        "400":
+          application/json: {"status": 400, "error": "Bad request"}
+        "401":
+          application/json: {"status": 401, "error": "Unauthorized"}
+        "404":
+          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
+examplesVersion: 1.0.2
+generatedTests: {}
 generatedFiles:
   - .devcontainer/README.md
   - .devcontainer/devcontainer.json
@@ -124,190 +720,3 @@ generatedFiles:
   - src/petstore/utils/serializers.py
   - src/petstore/utils/url.py
   - src/petstore/utils/values.py
-examples:
-  updatePet:
-    speakeasy-default-update-pet:
-      requestBody:
-        application/json: {"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": ["<value>", "<value>"]}
-      responses:
-        "200":
-          application/json: {"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": ["<value>"]}
-        "400":
-          application/json: {"status": 400, "error": "Bad request"}
-        "401":
-          application/json: {"status": 401, "error": "Unauthorized"}
-        "404":
-          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
-  addPet:
-    speakeasy-default-add-pet:
-      requestBody:
-        application/json: {"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": ["<value>"]}
-      responses:
-        "200":
-          application/json: {"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": ["<value>"]}
-  findPetsByStatus:
-    speakeasy-default-find-pets-by-status:
-      responses:
-        "200":
-          application/json: [{"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": []}, {"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": ["<value>"]}, {"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": []}]
-        "400":
-          application/json: {"status": 400, "error": "Bad request"}
-        "401":
-          application/json: {"status": 401, "error": "Unauthorized"}
-        "404":
-          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
-  findPetsByTags:
-    speakeasy-default-find-pets-by-tags:
-      responses:
-        "200":
-          application/json: [{"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": ["<value>", "<value>", "<value>"]}]
-        "400":
-          application/json: {"status": 400, "error": "Bad request"}
-        "401":
-          application/json: {"status": 401, "error": "Unauthorized"}
-        "404":
-          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
-  getPetById:
-    speakeasy-default-get-pet-by-id:
-      parameters:
-        path:
-          petId: 504151
-      responses:
-        "200":
-          application/json: {"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": []}
-        "400":
-          application/json: {"status": 400, "error": "Bad request"}
-        "401":
-          application/json: {"status": 401, "error": "Unauthorized"}
-        "404":
-          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
-  deletePet:
-    speakeasy-default-delete-pet:
-      parameters:
-        path:
-          petId: 441876
-        header: {}
-      responses:
-        "200":
-          application/json: {"id": 10, "name": "doggie", "category": {"id": 1, "name": "Dogs"}, "photoUrls": ["<value>"]}
-        "400":
-          application/json: {"status": 400, "error": "Bad request"}
-        "401":
-          application/json: {"status": 401, "error": "Unauthorized"}
-        "404":
-          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
-  uploadFile:
-    speakeasy-default-upload-file:
-      parameters:
-        path:
-          petId: 565380
-        query: {}
-  getInventory:
-    speakeasy-default-get-inventory:
-      responses:
-        "200":
-          application/json: {"key": 373538}
-        "401":
-          application/json: {"status": 401, "error": "Unauthorized"}
-        "404":
-          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
-  placeOrder:
-    speakeasy-default-place-order:
-      requestBody:
-        application/json: {"id": 10, "petId": 198772, "quantity": 7, "status": "approved"}
-      responses:
-        "200":
-          application/json: {"id": 10, "petId": 198772, "quantity": 7, "status": "approved"}
-        "401":
-          application/json: {"status": 401, "error": "Unauthorized"}
-        "404":
-          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
-  getOrderById:
-    speakeasy-default-get-order-by-id:
-      parameters:
-        path:
-          orderId: 614993
-      responses:
-        "200":
-          application/json: {"id": 10, "petId": 198772, "quantity": 7, "status": "approved"}
-        "400":
-          application/json: {"status": 400, "error": "Bad request"}
-        "401":
-          application/json: {"status": 401, "error": "Unauthorized"}
-        "404":
-          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
-  deleteOrder:
-    speakeasy-default-delete-order:
-      parameters:
-        path:
-          orderId: 127902
-      responses:
-        "200":
-          application/json: {"id": 10, "petId": 198772, "quantity": 7, "status": "approved"}
-        "400":
-          application/json: {"status": 400, "error": "Bad request"}
-        "401":
-          application/json: {"status": 401, "error": "Unauthorized"}
-        "404":
-          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
-  createUser:
-    speakeasy-default-create-user:
-      requestBody:
-        application/json: {"id": 10, "username": "theUser", "firstName": "John", "lastName": "James", "email": "john@email.com", "password": "12345", "phone": "12345", "userStatus": 1}
-      responses:
-        "200":
-          application/json: {"id": 10, "username": "theUser", "firstName": "John", "lastName": "James", "email": "john@email.com", "password": "12345", "phone": "12345", "userStatus": 1}
-  createUsersWithListInput:
-    speakeasy-default-create-users-with-list-input:
-      requestBody:
-        application/json: []
-      responses:
-        "200":
-          application/json: {"id": 10, "username": "theUser", "firstName": "John", "lastName": "James", "email": "john@email.com", "password": "12345", "phone": "12345", "userStatus": 1}
-  loginUser:
-    speakeasy-default-login-user:
-      responses:
-        "200":
-          application/json: "<value>"
-        "400":
-          application/json: {"status": 400, "error": "Bad request"}
-        "401":
-          application/json: {"status": 401, "error": "Unauthorized"}
-        "404":
-          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
-  logoutUser: {}
-  getUserByName:
-    speakeasy-default-get-user-by-name:
-      parameters:
-        path:
-          username: "Zachery_Lubowitz15"
-      responses:
-        "200":
-          application/json: {"id": 10, "username": "theUser", "firstName": "John", "lastName": "James", "email": "john@email.com", "password": "12345", "phone": "12345", "userStatus": 1}
-        "400":
-          application/json: {"status": 400, "error": "Bad request"}
-        "401":
-          application/json: {"status": 401, "error": "Unauthorized"}
-        "404":
-          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}
-  updateUser:
-    speakeasy-default-update-user:
-      parameters:
-        path:
-          username: "Dandre_Hand41"
-      requestBody:
-        application/json: {"id": 10, "username": "theUser", "firstName": "John", "lastName": "James", "email": "john@email.com", "password": "12345", "phone": "12345", "userStatus": 1}
-  deleteUser:
-    speakeasy-default-delete-user:
-      parameters:
-        path:
-          username: "Demetris_Schmitt"
-      responses:
-        "200":
-          application/json: {"id": 10, "username": "theUser", "firstName": "John", "lastName": "James", "email": "john@email.com", "password": "12345", "phone": "12345", "userStatus": 1}
-        "400":
-          application/json: {"status": 400, "error": "Bad request"}
-        "401":
-          application/json: {"status": 401, "error": "Unauthorized"}
-        "404":
-          application/json: {"status": 404, "error": "Not Found", "code": "object_not_found"}

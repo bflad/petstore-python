@@ -1,5 +1,4 @@
-# PetSDK
-(*pet*)
+# Pet
 
 ## Overview
 
@@ -24,28 +23,29 @@ Update an existing pet by Id
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="updatePet" method="put" path="/pet" -->
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
-        "name": "doggie",
-        "photo_urls": [
-            "<value>",
-            "<value>",
-        ],
+) as p_client:
+
+    res = p_client.pet.update_pet(request={
         "id": 10,
+        "name": "doggie",
         "category": {
             "id": 1,
             "name": "Dogs",
         },
+        "photo_urls": [
+            "<value 1>",
+        ],
     })
 
-    if res is not None:
-        # handle response
-        pass
+    # Handle response
+    print(res)
 
 ```
 
@@ -75,27 +75,31 @@ Add a new pet to the store
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="addPet" method="post" path="/pet" -->
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.add_pet(request={
-        "name": "doggie",
-        "photo_urls": [
-            "<value>",
-        ],
+) as p_client:
+
+    res = p_client.pet.add_pet(request={
         "id": 10,
+        "name": "doggie",
         "category": {
             "id": 1,
             "name": "Dogs",
         },
+        "photo_urls": [
+            "<value 1>",
+            "<value 2>",
+            "<value 3>",
+        ],
     })
 
-    if res is not None:
-        # handle response
-        pass
+    # Handle response
+    print(res)
 
 ```
 
@@ -122,17 +126,20 @@ Multiple status values can be provided with comma separated strings
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="findPetsByStatus" method="get" path="/pet/findByStatus" -->
 ```python
+import petstore
 from petstore import Petstore
+
 
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.find_pets_by_status()
+) as p_client:
 
-    if res is not None:
-        # handle response
-        pass
+    res = p_client.pet.find_pets_by_status(status=petstore.QueryParamStatus.AVAILABLE)
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -162,17 +169,19 @@ Multiple tags can be provided with comma separated strings. Use tag1, tag2, tag3
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="findPetsByTags" method="get" path="/pet/findByTags" -->
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.find_pets_by_tags()
+) as p_client:
 
-    if res is not None:
-        # handle response
-        pass
+    res = p_client.pet.find_pets_by_tags()
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -202,17 +211,19 @@ Returns a single pet
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="getPetById" method="get" path="/pet/{petId}" -->
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.get_pet_by_id(pet_id=504151)
+) as p_client:
 
-    if res is not None:
-        # handle response
-        pass
+    res = p_client.pet.get_pet_by_id(pet_id=311674)
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -242,17 +253,19 @@ Deletes a pet
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="deletePet" method="delete" path="/pet/{petId}" -->
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.delete_pet(pet_id=441876)
+) as p_client:
 
-    if res is not None:
-        # handle response
-        pass
+    res = p_client.pet.delete_pet(pet_id=818965)
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -283,17 +296,19 @@ uploads an image
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="uploadFile" method="post" path="/pet/{petId}/uploadImage" -->
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.upload_file(pet_id=565380)
+) as p_client:
 
-    if res is not None:
-        # handle response
-        pass
+    res = p_client.pet.upload_file(pet_id=150516)
+
+    # Handle response
+    print(res)
 
 ```
 
