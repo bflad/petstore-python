@@ -44,6 +44,7 @@ For more information about the API: [Find out more about Swagger](http://swagger
   * [Authentication](#authentication)
   * [File uploads](#file-uploads)
   * [Retries](#retries)
+  * [Resource Management](#resource-management)
   * [Debugging](#debugging)
 * [Development](#development)
   * [Maturity](#maturity)
@@ -54,14 +55,31 @@ For more information about the API: [Find out more about Swagger](http://swagger
 <!-- Start SDK Installation [installation] -->
 ## SDK Installation
 
-The SDK can be installed with either *pip* or *poetry* package managers.
+> [!TIP]
+> To finish publishing your SDK to PyPI you must [run your first generation action](https://www.speakeasy.com/docs/github-setup#step-by-step-guide).
+
+
+> [!NOTE]
+> **Python version upgrade policy**
+>
+> Once a Python version reaches its [official end of life date](https://devguide.python.org/versions/), a 3-month grace period is provided for users to upgrade. Following this grace period, the minimum python version supported in the SDK will be updated.
+
+The SDK can be installed with *uv*, *pip*, or *poetry* package managers.
+
+### uv
+
+*uv* is a fast Python package installer and resolver, designed as a drop-in replacement for pip and pip-tools. It's recommended for its speed and modern Python tooling capabilities.
+
+```bash
+uv add git+https://github.com/bflad/petstore-python.git
+```
 
 ### PIP
 
 *PIP* is the default package installer for Python, enabling easy installation and management of packages from PyPI via the command line.
 
 ```bash
-pip install git+<UNSET>.git
+pip install git+https://github.com/bflad/petstore-python.git
 ```
 
 ### Poetry
@@ -69,8 +87,39 @@ pip install git+<UNSET>.git
 *Poetry* is a modern tool that simplifies dependency management and package publishing by using a single `pyproject.toml` file to handle project metadata and dependencies.
 
 ```bash
-poetry add git+<UNSET>.git
+poetry add git+https://github.com/bflad/petstore-python.git
 ```
+
+### Shell and script usage with `uv`
+
+You can use this SDK in a Python shell with [uv](https://docs.astral.sh/uv/) and the `uvx` command that comes with it like so:
+
+```shell
+uvx --from petstore python
+```
+
+It's also possible to write a standalone Python script without needing to set up a whole project like so:
+
+```python
+#!/usr/bin/env -S uv run --script
+# /// script
+# requires-python = ">=3.10"
+# dependencies = [
+#     "petstore",
+# ]
+# ///
+
+from petstore import Petstore
+
+sdk = Petstore(
+  # SDK arguments
+)
+
+# Rest of script here...
+```
+
+Once that is saved to a file, you can run it with `uv run script.py` where
+`script.py` can be replaced with the actual file name.
 <!-- End SDK Installation [installation] -->
 
 <!-- Start IDE Support [idesupport] -->
@@ -92,55 +141,56 @@ Generally, the SDK will work well with most IDEs out of the box. However, when u
 # Synchronous Example
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
-        "name": "doggie",
-        "photo_urls": [
-            "<value>",
-            "<value>",
-        ],
+) as p_client:
+
+    res = p_client.pet.update_pet(request={
         "id": 10,
+        "name": "doggie",
         "category": {
             "id": 1,
             "name": "Dogs",
         },
+        "photo_urls": [
+            "<value 1>",
+        ],
     })
 
-    if res is not None:
-        # handle response
-        pass
+    # Handle response
+    print(res)
 ```
 
 </br>
 
-The same SDK client can also be used to make asychronous requests by importing asyncio.
+The same SDK client can also be used to make asynchronous requests by importing asyncio.
+
 ```python
 # Asynchronous Example
 import asyncio
 from petstore import Petstore
 
 async def main():
+
     async with Petstore(
         api_key="<YOUR_API_KEY_HERE>",
-    ) as s:
-        res = await s.pet.update_pet_async(request={
-            "name": "doggie",
-            "photo_urls": [
-                "<value>",
-                "<value>",
-            ],
+    ) as p_client:
+
+        res = await p_client.pet.update_pet_async(request={
             "id": 10,
+            "name": "doggie",
             "category": {
                 "id": 1,
                 "name": "Dogs",
             },
+            "photo_urls": [
+                "<value 1>",
+            ],
         })
 
-        if res is not None:
-            # handle response
-            pass
+        # Handle response
+        print(res)
 
 asyncio.run(main())
 ```
@@ -152,7 +202,7 @@ asyncio.run(main())
 <details open>
 <summary>Available methods</summary>
 
-### [pet](docs/sdks/petsdk/README.md)
+### [Pet](docs/sdks/petsdk/README.md)
 
 * [update_pet](docs/sdks/petsdk/README.md#update_pet) - Update an existing pet
 * [add_pet](docs/sdks/petsdk/README.md#add_pet) - Add a new pet to the store
@@ -162,15 +212,14 @@ asyncio.run(main())
 * [delete_pet](docs/sdks/petsdk/README.md#delete_pet) - Deletes a pet
 * [upload_file](docs/sdks/petsdk/README.md#upload_file) - uploads an image
 
-
-### [store](docs/sdks/store/README.md)
+### [Store](docs/sdks/store/README.md)
 
 * [get_inventory](docs/sdks/store/README.md#get_inventory) - Returns pet inventories by status
 * [place_order](docs/sdks/store/README.md#place_order) - Place an order for a pet
 * [get_order_by_id](docs/sdks/store/README.md#get_order_by_id) - Find purchase order by ID
 * [delete_order](docs/sdks/store/README.md#delete_order) - Delete purchase order by ID
 
-### [user](docs/sdks/usersdk/README.md)
+### [User](docs/sdks/usersdk/README.md)
 
 * [create_user](docs/sdks/usersdk/README.md#create_user) - Create user
 * [create_users_with_list_input](docs/sdks/usersdk/README.md#create_users_with_list_input) - Creates list of users with given input array
@@ -186,66 +235,81 @@ asyncio.run(main())
 <!-- Start Error Handling [errors] -->
 ## Error Handling
 
-Handling errors in this SDK should largely match your expectations. All operations return a response object or raise an exception.
+[`PetstoreError`](./src/petstore/models/petstoreerror.py) is the base class for all HTTP error responses. It has the following properties:
 
-By default, an API error will raise a models.SDKError exception, which has the following properties:
-
-| Property        | Type             | Description           |
-|-----------------|------------------|-----------------------|
-| `.status_code`  | *int*            | The HTTP status code  |
-| `.message`      | *str*            | The error message     |
-| `.raw_response` | *httpx.Response* | The raw HTTP response |
-| `.body`         | *str*            | The response content  |
-
-When custom error responses are specified for an operation, the SDK may also raise their associated exceptions. You can refer to respective *Errors* tables in SDK docs for more details on possible exception types for each operation. For example, the `update_pet_async` method may raise the following exceptions:
-
-| Error Type                  | Status Code | Content Type     |
-| --------------------------- | ----------- | ---------------- |
-| models.APIErrorInvalidInput | 400         | application/json |
-| models.APIErrorUnauthorized | 401         | application/json |
-| models.APIErrorNotFound     | 404         | application/json |
-| models.SDKError             | 4XX, 5XX    | \*/\*            |
+| Property           | Type             | Description                                                                             |
+| ------------------ | ---------------- | --------------------------------------------------------------------------------------- |
+| `err.message`      | `str`            | Error message                                                                           |
+| `err.status_code`  | `int`            | HTTP response status code eg `404`                                                      |
+| `err.headers`      | `httpx.Headers`  | HTTP response headers                                                                   |
+| `err.body`         | `str`            | HTTP body. Can be empty string if no body is returned.                                  |
+| `err.raw_response` | `httpx.Response` | Raw HTTP response                                                                       |
+| `err.data`         |                  | Optional. Some errors may contain structured data. [See Error Classes](#error-classes). |
 
 ### Example
-
 ```python
 from petstore import Petstore, models
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
+) as p_client:
     res = None
     try:
-        res = s.pet.update_pet(request={
-            "name": "doggie",
-            "photo_urls": [
-                "<value>",
-                "<value>",
-            ],
+
+        res = p_client.pet.update_pet(request={
             "id": 10,
+            "name": "doggie",
             "category": {
                 "id": 1,
                 "name": "Dogs",
             },
+            "photo_urls": [
+                "<value 1>",
+            ],
         })
 
-        if res is not None:
-            # handle response
-            pass
+        # Handle response
+        print(res)
 
-    except models.APIErrorInvalidInput as e:
-        # handle e.data: models.APIErrorInvalidInputData
-        raise(e)
-    except models.APIErrorUnauthorized as e:
-        # handle e.data: models.APIErrorUnauthorizedData
-        raise(e)
-    except models.APIErrorNotFound as e:
-        # handle e.data: models.APIErrorNotFoundData
-        raise(e)
-    except models.SDKError as e:
-        # handle exception
-        raise(e)
+
+    except models.PetstoreError as e:
+        # The base class for HTTP error responses
+        print(e.message)
+        print(e.status_code)
+        print(e.body)
+        print(e.headers)
+        print(e.raw_response)
+
+        # Depending on the method different errors may be thrown
+        if isinstance(e, models.APIErrorInvalidInput):
+            print(e.data.status)  # int
+            print(e.data.error)  # str
 ```
+
+### Error Classes
+**Primary error:**
+* [`PetstoreError`](./src/petstore/models/petstoreerror.py): The base class for HTTP error responses.
+
+<details><summary>Less common errors (8)</summary>
+
+<br />
+
+**Network errors:**
+* [`httpx.RequestError`](https://www.python-httpx.org/exceptions/#httpx.RequestError): Base class for request errors.
+    * [`httpx.ConnectError`](https://www.python-httpx.org/exceptions/#httpx.ConnectError): HTTP client was unable to make a request to a server.
+    * [`httpx.TimeoutException`](https://www.python-httpx.org/exceptions/#httpx.TimeoutException): HTTP request timed out.
+
+
+**Inherit from [`PetstoreError`](./src/petstore/models/petstoreerror.py)**:
+* [`APIErrorUnauthorized`](./src/petstore/models/apierrorunauthorized.py): Unauthorized error. Status code `401`. Applicable to 12 of 18 methods.*
+* [`APIErrorNotFound`](./src/petstore/models/apierrornotfound.py): Not Found error. Status code `404`. Applicable to 12 of 18 methods.*
+* [`APIErrorInvalidInput`](./src/petstore/models/apierrorinvalidinput.py): Not Found error. Status code `400`. Applicable to 10 of 18 methods.*
+* [`ResponseValidationError`](./src/petstore/models/responsevalidationerror.py): Type mismatch between the response data and the expected Pydantic model. Provides access to the Pydantic validation error via the `cause` attribute.
+
+</details>
+
+\* Check [the method documentation](#available-resources-and-operations) to see if the error is applicable.
 <!-- End Error Handling [errors] -->
 
 <!-- Start Server Selection [server] -->
@@ -255,38 +319,43 @@ with Petstore(
 
 You can override the default server globally by passing a server index to the `server_idx: int` optional parameter when initializing the SDK client instance. The selected server will then be used as the default on the operations that use it. This table lists the indexes associated with the available servers:
 
-| #   | Server                              | Variables                               | Default values |
-| --- | ----------------------------------- | --------------------------------------- | -------------- |
-| 0   | `http://localhost:18080`            |                                         |                |
-| 1   | `https://{environment}.petstore.io` | `environment: models.ServerEnvironment` | `"prod"`       |
+| #   | Server                              | Variables     | Description            |
+| --- | ----------------------------------- | ------------- | ---------------------- |
+| 0   | `http://localhost:18080`            |               | Mock API server.       |
+| 1   | `https://{environment}.petstore.io` | `environment` | A per-environment API. |
 
-If the selected server has variables, you may override their default values through the additional parameters made available in the SDK constructor.
+If the selected server has variables, you may override its default values through the additional parameters made available in the SDK constructor:
+
+| Variable      | Parameter                               | Supported Values                           | Default  | Description                                                   |
+| ------------- | --------------------------------------- | ------------------------------------------ | -------- | ------------------------------------------------------------- |
+| `environment` | `environment: models.ServerEnvironment` | - `"prod"`<br/>- `"staging"`<br/>- `"dev"` | `"prod"` | The environment name. Defaults to the production environment. |
 
 #### Example
 
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     server_idx=1,
+    environment="dev",
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
-        "name": "doggie",
-        "photo_urls": [
-            "<value>",
-            "<value>",
-        ],
+) as p_client:
+
+    res = p_client.pet.update_pet(request={
         "id": 10,
+        "name": "doggie",
         "category": {
             "id": 1,
             "name": "Dogs",
         },
+        "photo_urls": [
+            "<value 1>",
+        ],
     })
 
-    if res is not None:
-        # handle response
-        pass
+    # Handle response
+    print(res)
 
 ```
 
@@ -296,26 +365,26 @@ The default server can also be overridden globally by passing a URL to the `serv
 ```python
 from petstore import Petstore
 
+
 with Petstore(
-    server_url="http://localhost:18080",
+    server_url="https://prod.petstore.io",
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
-        "name": "doggie",
-        "photo_urls": [
-            "<value>",
-            "<value>",
-        ],
+) as p_client:
+
+    res = p_client.pet.update_pet(request={
         "id": 10,
+        "name": "doggie",
         "category": {
             "id": 1,
             "name": "Dogs",
         },
+        "photo_urls": [
+            "<value 1>",
+        ],
     })
 
-    if res is not None:
-        # handle response
-        pass
+    # Handle response
+    print(res)
 
 ```
 <!-- End Server Selection [server] -->
@@ -416,25 +485,25 @@ To authenticate with the API the `api_key` parameter must be set when initializi
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
-        "name": "doggie",
-        "photo_urls": [
-            "<value>",
-            "<value>",
-        ],
+) as p_client:
+
+    res = p_client.pet.update_pet(request={
         "id": 10,
+        "name": "doggie",
         "category": {
             "id": 1,
             "name": "Dogs",
         },
+        "photo_urls": [
+            "<value 1>",
+        ],
     })
 
-    if res is not None:
-        # handle response
-        pass
+    # Handle response
+    print(res)
 
 ```
 <!-- End Authentication [security] -->
@@ -452,14 +521,15 @@ Certain SDK methods accept file objects as part of a request body or multi-part 
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.upload_file(pet_id=565380)
+) as p_client:
 
-    if res is not None:
-        # handle response
-        pass
+    res = p_client.pet.upload_file(pet_id=150516)
+
+    # Handle response
+    print(res)
 
 ```
 <!-- End File uploads [file-upload] -->
@@ -474,26 +544,26 @@ To change the default retry strategy for a single API call, simply provide a `Re
 from petstore import Petstore
 from petstore.utils import BackoffStrategy, RetryConfig
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
-        "name": "doggie",
-        "photo_urls": [
-            "<value>",
-            "<value>",
-        ],
+) as p_client:
+
+    res = p_client.pet.update_pet(request={
         "id": 10,
+        "name": "doggie",
         "category": {
             "id": 1,
             "name": "Dogs",
         },
+        "photo_urls": [
+            "<value 1>",
+        ],
     },
         RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False))
 
-    if res is not None:
-        # handle response
-        pass
+    # Handle response
+    print(res)
 
 ```
 
@@ -502,29 +572,56 @@ If you'd like to override the default retry strategy for all operations that sup
 from petstore import Petstore
 from petstore.utils import BackoffStrategy, RetryConfig
 
+
 with Petstore(
     retry_config=RetryConfig("backoff", BackoffStrategy(1, 50, 1.1, 100), False),
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.pet.update_pet(request={
-        "name": "doggie",
-        "photo_urls": [
-            "<value>",
-            "<value>",
-        ],
+) as p_client:
+
+    res = p_client.pet.update_pet(request={
         "id": 10,
+        "name": "doggie",
         "category": {
             "id": 1,
             "name": "Dogs",
         },
+        "photo_urls": [
+            "<value 1>",
+        ],
     })
 
-    if res is not None:
-        # handle response
-        pass
+    # Handle response
+    print(res)
 
 ```
 <!-- End Retries [retries] -->
+
+<!-- Start Resource Management [resource-management] -->
+## Resource Management
+
+The `Petstore` class implements the context manager protocol and registers a finalizer function to close the underlying sync and async HTTPX clients it uses under the hood. This will close HTTP connections, release memory and free up other resources held by the SDK. In short-lived Python programs and notebooks that make a few SDK method calls, resource management may not be a concern. However, in longer-lived programs, it is beneficial to create a single SDK instance via a [context manager][context-manager] and reuse it across the application.
+
+[context-manager]: https://docs.python.org/3/reference/datamodel.html#context-managers
+
+```python
+from petstore import Petstore
+def main():
+
+    with Petstore(
+        api_key="<YOUR_API_KEY_HERE>",
+    ) as p_client:
+        # Rest of application here...
+
+
+# Or when using async:
+async def amain():
+
+    async with Petstore(
+        api_key="<YOUR_API_KEY_HERE>",
+    ) as p_client:
+        # Rest of application here...
+```
+<!-- End Resource Management [resource-management] -->
 
 <!-- Start Debugging [debug] -->
 ## Debugging
