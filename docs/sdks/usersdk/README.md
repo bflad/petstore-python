@@ -1,5 +1,4 @@
-# UserSDK
-(*user*)
+# User
 
 ## Overview
 
@@ -21,13 +20,16 @@ This can only be done by the logged in user.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="createUser" method="post" path="/user" -->
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.user.create_user(request={
+) as p_client:
+
+    res = p_client.user.create_user(request={
         "id": 10,
         "username": "theUser",
         "first_name": "John",
@@ -38,9 +40,8 @@ with Petstore(
         "user_status": 1,
     })
 
-    if res is not None:
-        # handle response
-        pass
+    # Handle response
+    print(res)
 
 ```
 
@@ -67,13 +68,16 @@ Creates list of users with given input array
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="createUsersWithListInput" method="post" path="/user/createWithList" -->
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.user.create_users_with_list_input(request=[
+) as p_client:
+
+    res = p_client.user.create_users_with_list_input(request=[
         {
             "id": 10,
             "username": "theUser",
@@ -86,9 +90,8 @@ with Petstore(
         },
     ])
 
-    if res is not None:
-        # handle response
-        pass
+    # Handle response
+    print(res)
 
 ```
 
@@ -115,17 +118,19 @@ Logs user into the system
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="loginUser" method="get" path="/user/login" -->
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.user.login_user()
+) as p_client:
 
-    if res is not None:
-        # handle response
-        pass
+    res = p_client.user.login_user()
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -156,13 +161,16 @@ Logs out current logged in user session
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="logoutUser" method="get" path="/user/logout" -->
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    s.user.logout_user()
+) as p_client:
+
+    p_client.user.logout_user()
 
     # Use the SDK ...
 
@@ -186,17 +194,19 @@ Get user by user name
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="getUserByName" method="get" path="/user/{username}" -->
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.user.get_user_by_name(username="Zachery_Lubowitz15")
+) as p_client:
 
-    if res is not None:
-        # handle response
-        pass
+    res = p_client.user.get_user_by_name(username="Edyth10")
+
+    # Handle response
+    print(res)
 
 ```
 
@@ -226,13 +236,16 @@ This can only be done by the logged in user.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="updateUser" method="put" path="/user/{username}" -->
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    s.user.update_user(username="Dandre_Hand41", user={
+) as p_client:
+
+    p_client.user.update_user(username="Alison.Cassin", user={
         "id": 10,
         "username": "theUser",
         "first_name": "John",
@@ -267,17 +280,19 @@ This can only be done by the logged in user.
 
 ### Example Usage
 
+<!-- UsageSnippet language="python" operationID="deleteUser" method="delete" path="/user/{username}" -->
 ```python
 from petstore import Petstore
 
+
 with Petstore(
     api_key="<YOUR_API_KEY_HERE>",
-) as s:
-    res = s.user.delete_user(username="Demetris_Schmitt")
+) as p_client:
 
-    if res is not None:
-        # handle response
-        pass
+    res = p_client.user.delete_user(username="Rita_Schuppe")
+
+    # Handle response
+    print(res)
 
 ```
 
