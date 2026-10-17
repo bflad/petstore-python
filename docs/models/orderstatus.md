@@ -2,6 +2,14 @@
 
 Order Status
 
+## Example Usage
+
+```python
+from petstore.models import OrderStatus
+
+value = OrderStatus.PLACED
+```
+
 
 ## Values
 
