@@ -2,9 +2,15 @@
 
 from __future__ import annotations
 import io
-from petstore.types import BaseModel
+from petstore.types import (
+    BaseModel,
+    UNSET_SENTINEL,
+    current_exclude_none,
+    serialize_with_info,
+)
 from petstore.utils import FieldMetadata, PathParamMetadata, QueryParamMetadata
 import pydantic
+from pydantic import model_serializer
 from typing import IO, Optional, Union
 from typing_extensions import Annotated, NotRequired, TypedDict
 
@@ -14,7 +20,7 @@ class UploadFileRequestTypedDict(TypedDict):
     r"""ID of pet to update"""
     additional_metadata: NotRequired[str]
     r"""Additional Metadata"""
-    request_body: NotRequired[Union[bytes, IO[bytes], io.BufferedReader]]
+    request_body: NotRequired[Union[bytes, IO[bytes], io.IOBase]]
 
 
 class UploadFileRequest(BaseModel):
@@ -33,6 +39,27 @@ class UploadFileRequest(BaseModel):
     r"""Additional Metadata"""
 
     request_body: Annotated[
-        Optional[Union[bytes, IO[bytes], io.BufferedReader]],
-        FieldMetadata(request=True),
+        Optional[Union[bytes, IO[bytes], io.IOBase]], FieldMetadata(request=True)
     ] = None
+
+    @model_serializer(mode="wrap")
+    def _serialize_model_with_info(self, handler, info):
+        return serialize_with_info(self.serialize_model, handler, info)
+
+    def serialize_model(self, handler):
+        optional_fields = set(["additionalMetadata", "RequestBody"])
+        exclude_none = current_exclude_none()
+        serialized = handler(self)
+        m = {}
+
+        for n, f in type(self).model_fields.items():
+            k = f.alias if f.alias is not None else n
+            if k not in serialized and n not in serialized and exclude_none is False:
+                continue
+            val = serialized.get(k, serialized.get(n))
+
+            if val != UNSET_SENTINEL:
+                if val is not None or k not in optional_fields:
+                    m[k] = val
+
+        return m
